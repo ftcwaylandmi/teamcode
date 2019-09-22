@@ -34,6 +34,9 @@ public class TeleOpAlex extends OpMode{
         right = -gamepad1.right_stick_y;
         robot.LeftDrive(left);
         robot.RightDrive(right);
+
+        telemetry.addData("left", left);
+        telemetry.addData("right", right);
     }
 
 
