@@ -41,5 +41,25 @@ public class StoneBotRobot {
         return moving;
     }
 
+    public void hookServoGotoPosition(double position){
+        myself.hookServo.setPosition(position);
+    }
+    public void hookServoGotoMin(){
+        myself.hookServo.setPosition(myself.hookServoMin);
+    }
+    public void hookServoGotoMax() {
+        myself.hookServo.setPosition(myself.hookServoMax);
+    }
+    public void grabServoGotoPosition(double position){
+        myself.hookServo.setPosition(position);
+    }
+    public void grabServoGotoMin(){
+        myself.grabServo.setPosition(myself.grabServoMin);
+    }
+    public void grabServoGotoMax(){
+        myself.grabServo.setPosition(myself.grabServoMax);
+    }
+
+
 
 }
