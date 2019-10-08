@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class RuckusBotHardware {
 
-    public DcMotor leftDrive = null;
+    public DcMotor leftDrive = null; 
     public DcMotor rightDrive = null;
     public DcMotor liftDrive = null;
     public DcMotor armDrive = null;
@@ -23,8 +23,8 @@ public class RuckusBotHardware {
     public void init(HardwareMap ahwMap){
     // SaveHardwareMap
          hwMap=ahwMap;
-         leftDrive = hwMap.get(DcMotor.class, "left_drive");
-         rightDrive = hwMap.get(DcMotor.class,"right_drive");
+         leftDrive = hwMap.get(DcMotor.class, "left_front_drive");
+         rightDrive = hwMap.get(DcMotor.class,"right_front_drive");
          liftDrive = hwMap.get(DcMotor.class,"lift_drive");
          armDrive = hwMap.get(DcMotor.class,  "arm_drive");
          yeetServo = hwMap.get(Servo.class, "yeet_servo");

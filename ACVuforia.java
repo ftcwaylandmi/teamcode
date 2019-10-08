@@ -31,7 +31,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.StoneBotHardware;
+import org.firstinspires.ftc.teamcode.StoneBotRobot;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -115,7 +119,10 @@ public class ACVuforia extends LinearOpMode {
     private static final float mmPerInch        = 25.4f;
     private static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
 
-    DemoBotRobot robot = new DemoBotRobot();
+    StoneBotRobot robot = new StoneBotRobot();
+
+
+
     // Constant for Stone Target
     private static final float stoneZ = 2.00f * mmPerInch;
 
@@ -138,7 +145,10 @@ public class ACVuforia extends LinearOpMode {
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
 
+
     @Override public void runOpMode() {
+
+        robot.initHW(hardwareMap);
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
@@ -317,12 +327,23 @@ public class ACVuforia extends LinearOpMode {
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
-        robot.initHW(hardwareMap);
+
         targetsSkyStone.activate();
         while (!isStopRequested()) {
 
             robot.RightDrive(-gamepad1.right_stick_y);
             robot.LeftDrive(-gamepad1.left_stick_y);
+
+            if(gamepad2.x) {
+                robot.hookServoGotoMax();
+
+            } else {
+                robot.hookServoGotoMin();
+
+            }
+
+
+
 
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;

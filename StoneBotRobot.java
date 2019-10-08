@@ -1,39 +1,34 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.StoneBotHardware;
 
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
+
     boolean moving;
-    public void initRobot() {
+
+    public void initHW(HardwareMap ahwMap) {
+        myself.init(ahwMap);
         moving = false;
     }
 
-    public void drive (double lpower, double rpower) {
-        myself.rightDrive.setPower(rpower);
-        myself.leftDrive.setPower(lpower);
-        moving = true;
+    public void RightDrive(double power){
+        myself.rightfrontDrive.setPower(power);
+        myself.rightbackDrive.setPower(power);
     }
 
-    public void DriveReverse(double power) {
-        drive(-power, -power);
-    }
-
-    public void DriveForward(double power) {
-        drive(power, power);
-    }
-
-    public void DriveLeft(double power) {
-        drive(-power,power);
-    }
-
-    public void DriveRight(double power) {
-        drive(power,-power);
+    public void LeftDrive(double power){
+        myself.leftfrontDrive.setPower(power);
+        myself.leftbackDrive.setPower(power);
     }
 
     public void DriveStop() {
-        myself.leftDrive.setPower(0);
-        myself.rightDrive.setPower(0);
+        myself.leftfrontDrive.setPower(0);
+        myself.rightfrontDrive.setPower(0);
+        myself.leftbackDrive.setPower(0);
+        myself.rightbackDrive.setPower(0);
         moving = false;
     }
 
@@ -59,7 +54,6 @@ public class StoneBotRobot {
     public void grabServoGotoMax(){
         myself.grabServo.setPosition(myself.grabServoMax);
     }
-
 
 
 }

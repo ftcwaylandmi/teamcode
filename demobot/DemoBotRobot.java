@@ -51,4 +51,16 @@ public class DemoBotRobot{
     public void LeftDrive(double power){
         myself.leftDrive.setPower(power);
     }
+
+    double ServoGoToMIN = 0;
+
+        public void ServoGoToMIN() {
+            double ServoGoToMIN = 0;
+    }
+
+    public void ServoGoToMAX() {
+        double ServoGotoMax = 0;
+    }
+
+
 }
