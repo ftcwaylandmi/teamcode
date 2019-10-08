@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.DemoBotHardware;
-import org.firstinspires.ftc.teamcode.DemoBotRobot;
+//import org.firstinspires.ftc.teamcode.StoneBotHardware;
+//import org.firstinspires.ftc.teamcode.StoneBotRobot;
 
-@TeleOp(name="Alexteleop", group="Test")
-public class TeleOpAlex extends OpMode{
+@TeleOp(name="Teleop Demo", group="Test")
+public class TeleOpDemo extends OpMode{
     DemoBotRobot robot = new DemoBotRobot();
 
     @Override
@@ -34,6 +34,8 @@ public class TeleOpAlex extends OpMode{
         right = -gamepad1.right_stick_y;
         robot.LeftDrive(left);
         robot.RightDrive(right);
+
+
 
         telemetry.addData("left", left);
         telemetry.addData("right", right);

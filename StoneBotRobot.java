@@ -1,59 +1,85 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.StoneBotHardware;
+import org.firstinspires.ftc.teamcode.DemoBotHardware;
 
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
-
     boolean moving;
+    double hookServoMax = 1;
+    double grabServoMax = 1;
+    public void  initrobot(){
+        moving=false;
+    }
+    public void drive (double lpower, double rpower){
+        myself.rightDrive.setPower(rpower);
+        myself.leftDrive.setPower(lpower);
+        moving=true;
+    }
 
     public void initHW(HardwareMap ahwMap) {
         myself.init(ahwMap);
-        moving = false;
+
+    }
+    public void DriveReverse(double power) {
+        drive(-power, -power);
+    }
+    public void DriveForward(double power) {
+        drive(power, power);
     }
 
-    public void RightDrive(double power){
-        myself.rightfrontDrive.setPower(power);
-        myself.rightbackDrive.setPower(power);
+    public void DriveLeft(double power) {
+        drive(-power, power);
     }
 
-    public void LeftDrive(double power){
-        myself.leftfrontDrive.setPower(power);
-        myself.leftbackDrive.setPower(power);
+    public void DriveRight(double power) {
+        drive(power, -power);
     }
 
     public void DriveStop() {
-        myself.leftfrontDrive.setPower(0);
-        myself.rightfrontDrive.setPower(0);
-        myself.leftbackDrive.setPower(0);
-        myself.rightbackDrive.setPower(0);
+        myself.leftDrive.setPower(0);
+        myself.rightDrive.setPower(0);
         moving = false;
     }
 
-    public boolean IsMoving() {
+    public boolean ISMoving() {
         return moving;
     }
 
-    public void hookServoGotoPosition(double position){
-        myself.hookServo.setPosition(position);
-    }
-    public void hookServoGotoMin(){
-        myself.hookServo.setPosition(myself.hookServoMin);
-    }
-    public void hookServoGotoMax() {
-        myself.hookServo.setPosition(myself.hookServoMax);
-    }
-    public void grabServoGotoPosition(double position){
-        myself.hookServo.setPosition(position);
-    }
-    public void grabServoGotoMin(){
-        myself.grabServo.setPosition(myself.grabServoMin);
-    }
-    public void grabServoGotoMax(){
-        myself.grabServo.setPosition(myself.grabServoMax);
+    public void RightDrive(double power){
+        myself.rightDrive.setPower(power);
+        myself.rightrearDrive.setPower(power);
     }
 
+    public void LeftDrive(double power){
+        myself.leftDrive.setPower(power);
+        myself.leftrearDrive.setPower(power);
+    }
 
+    double ServoGoToMIN = 0;
+
+    public void ServoGoToMIN() {
+        double ServoGoToMIN = 0;
+    }
+
+    public void ServoGoToMAX() {
+        double ServoGotoMax = 0;
+    }
+
+    public void hookServoGoToMax(){
+        myself.hookServo.setPosition(hookServoMax);
+
+    }
+
+    public void grabServoGoToMax(){
+        myself.grabServo.setPosition(grabServoMax);
+    }
+
+    public void hookServoGoToPosition(double pos){
+        myself.hookServo.setPosition(pos);
+    }
+
+    public void grabServoGoToPosition(double pos){
+        myself.grabServo.setPosition(pos);
+    }
 }

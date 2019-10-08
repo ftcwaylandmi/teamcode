@@ -3,16 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.DemoBotHardware;
 
-public class DemoBotRobot{
+public class DemoBotRobot {
     DemoBotHardware myself = new DemoBotHardware();
     boolean moving;
     public void  initrobot(){
         moving=false;
-}
+    }
     public void drive (double lpower, double rpower){
-    myself.rightDrive.setPower(rpower);
-    myself.leftDrive.setPower(lpower);
-    moving=true;
+        myself.rightDrive.setPower(rpower);
+        myself.leftDrive.setPower(lpower);
+        moving=true;
     }
 
     public void initHW(HardwareMap ahwMap) {
@@ -54,8 +54,8 @@ public class DemoBotRobot{
 
     double ServoGoToMIN = 0;
 
-        public void ServoGoToMIN() {
-            double ServoGoToMIN = 0;
+    public void ServoGoToMIN() {
+        double ServoGoToMIN = 0;
     }
 
     public void ServoGoToMAX() {

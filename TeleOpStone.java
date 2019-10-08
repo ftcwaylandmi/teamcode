@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.StoneBotHardware;
-import org.firstinspires.ftc.teamcode.StoneBotRobot;
+//import org.firstinspires.ftc.teamcode.StoneBotHardware;
+//import org.firstinspires.ftc.teamcode.StoneBotRobot;
 
 @TeleOp(name="Teleop Stone", group="Test")
 public class TeleOpStone extends OpMode{
@@ -35,6 +35,16 @@ public class TeleOpStone extends OpMode{
         robot.LeftDrive(left);
         robot.RightDrive(right);
 
+        if (gamepad2.x){
+            robot.hookServoGoToMax();
+        } else {
+            robot.hookServoGoToPosition(0);
+        }
+        if (gamepad2.a){
+            robot.grabServoGoToMax();
+        } else {
+            robot.grabServoGoToPosition(0);
+        }
         telemetry.addData("left", left);
         telemetry.addData("right", right);
     }
