@@ -28,10 +28,10 @@ public class StoneBotHardware {
     public void init(HardwareMap ahwMap){
         //save Hardware Map
         hwMap = ahwMap;
-        leftfrontDrive = hwMap.get(DcMotor.class,"left_front_drive"); // initialize the left front drive motor
-        leftbackDrive = hwMap.get(DcMotor.class,"left_back_drive"); // initialize the left back drive motor
-        rightfrontDrive = hwMap.get(DcMotor.class,"right_front_drive"); // initialize the right front drive motor
-        leftbackDrive = hwMap.get(DcMotor.class,"left_back_drive"); // initialize the left back drive motor
+        leftfrontDrive = hwMap.get(DcMotor.class,"lfd"); // initialize the left front drive motor
+        leftbackDrive = hwMap.get(DcMotor.class,"lrd"); // initialize the left back drive motor
+        rightfrontDrive = hwMap.get(DcMotor.class,"rfd"); // initialize the right front drive motor
+        leftbackDrive = hwMap.get(DcMotor.class,"rrd"); // initialize the left back drive motor
         hookServo = hwMap.get(Servo.class, "hook_servo");
         grabServo = hwMap.get(Servo.class, "grab_servo");
         leftfrontDrive.setDirection(DcMotor.Direction.FORWARD); //makes the robot go forward
