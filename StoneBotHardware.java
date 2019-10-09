@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,8 +15,9 @@ public class StoneBotHardware {
     public DcMotor leftrearDrive = null;
     public DcMotor rightrearDrive = null;
 
-    public Servo hookServo = null;
+    public CRServo hookServo = null;
     public Servo grabServo = null;
+    public CRServo slideServo = null;
 
     HardwareMap hwMap = null;
 
@@ -31,8 +33,10 @@ public class StoneBotHardware {
         leftrearDrive=hwMap.get(DcMotor.class, "lfd");
         rightrearDrive=hwMap.get (DcMotor.class, "rfd");
 
-        hookServo = hwMap.get(Servo.class,"hook_servo");
+        hookServo = hwMap.get(CRServo.class, "hook_servo");
+        //hookServo = hwMap.get(Servo.class,"hook_servo");
         grabServo = hwMap.get(Servo.class,"grab_servo");
+        slideServo = hwMap.get(CRServo.class, "slide_servo");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -43,7 +47,7 @@ public class StoneBotHardware {
         rightDrive.setPower(0);
         leftrearDrive.setPower(0);
         rightrearDrive.setPower(0);
-        hookServo.setPosition(0);
+        //hookServo.setPosition(0);
         grabServo.setPosition(0);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

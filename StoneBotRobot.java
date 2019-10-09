@@ -7,6 +7,7 @@ public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
     boolean moving;
     double hookServoMax = 1;
+    double hookServoSpeed = 1;
     double grabServoMax = 1;
     public void  initrobot(){
         moving=false;
@@ -67,8 +68,16 @@ public class StoneBotRobot {
     }
 
     public void hookServoGoToMax(){
-        myself.hookServo.setPosition(hookServoMax);
+        //myself.hookServo.setPosition(hookServoMax);
+        myself.hookServo.setPower(hookServoSpeed);
 
+    }
+    public void hookServoStop() {
+        myself.hookServo.setPower(0);
+    }
+
+    public void hookServoGoToMin() {
+        myself.hookServo.setPower(-hookServoSpeed);
     }
 
     public void grabServoGoToMax(){
@@ -76,7 +85,7 @@ public class StoneBotRobot {
     }
 
     public void hookServoGoToPosition(double pos){
-        myself.hookServo.setPosition(pos);
+        //myself.hookServo.setPosition(pos);
     }
 
     public void grabServoGoToPosition(double pos){

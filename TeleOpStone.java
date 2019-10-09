@@ -37,14 +37,17 @@ public class TeleOpStone extends OpMode{
 
         if (gamepad2.x){
             robot.hookServoGoToMax();
+        } else if (gamepad2.y) {
+            robot.hookServoGoToMin();
         } else {
-            robot.hookServoGoToPosition(0);
+            robot.hookServoStop();
         }
-        if (gamepad2.a){
+
+        /*if (gamepad2.a){
             robot.grabServoGoToMax();
         } else {
             robot.grabServoGoToPosition(0);
-        }
+        }*/
         telemetry.addData("left", left);
         telemetry.addData("right", right);
     }
