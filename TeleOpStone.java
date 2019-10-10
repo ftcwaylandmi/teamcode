@@ -27,7 +27,7 @@ public class TeleOpStone extends OpMode{
     }
 
     @Override
-    public void loop(){
+    public void loop() {
         double left = 0.00;
         double right = 0.00;
         left = -gamepad1.left_stick_y;
@@ -35,13 +35,23 @@ public class TeleOpStone extends OpMode{
         robot.LeftDrive(left);
         robot.RightDrive(right);
 
-        if (gamepad2.x){
+        if (gamepad2.x) {
             robot.hookServoGoToMax();
         } else if (gamepad2.y) {
             robot.hookServoGoToMin();
         } else {
             robot.hookServoStop();
         }
+
+        if (gamepad2.a) {
+            robot.slideServoIn();
+        } else if (gamepad2.b) {
+            robot.slideServoOut();
+        } else {
+            robot.slideServoStop();
+        }
+
+
 
         /*if (gamepad2.a){
             robot.grabServoGoToMax();
