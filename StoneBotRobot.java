@@ -11,6 +11,7 @@ public class StoneBotRobot {
 
     double grabServoMax = 0.6;
     double grabServoMin = -1;
+    double speed = 0;
 
     public void  initrobot(){
         moving=false;

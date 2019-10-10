@@ -10,6 +10,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 @TeleOp(name="Teleop Stone", group="Test")
 public class TeleOpStone extends OpMode{
     StoneBotRobot robot = new StoneBotRobot();
+    double speedinc = 0.05;
+    boolean held = false;
+    boolean bp = false;
+    double slideoutspeed = 0.00;
 
     @Override
     public void init(){
@@ -56,12 +60,48 @@ public class TeleOpStone extends OpMode{
         robot.eleServoIn(EIn);
         robot.eleServoOut(EOut);
 
-        double SIn = -0.50;
+        /*double SIn = -0.50;
         double SOut = 0.50;
         SIn = gamepad2.right_stick_x;
         SOut = -gamepad2.right_stick_x;
         robot.slideServoIn(SIn);
-        robot.slideServoOut(SOut);
+        robot.slideServoOut(SOut);*/
+
+
+        if (gamepad2.right_stick_x  != 0.00) {
+            if (!held) {
+                slideoutspeed += speedinc;
+            } else if (slideoutspeed == 1) {
+                bp = true;
+                slideoutspeed -= speedinc;
+            } else if (bp) {
+                slideoutspeed = -speedinc;
+            } else {
+                slideoutspeed = +speedinc;
+            }
+        } else {
+            held = false;
+        }
+        robot.slideServoOut(slideoutspeed);
+
+        if (-gamepad2.right_stick_x  != 0.00) {
+            if (!held) {
+                slideoutspeed -= speedinc;
+            } else if (slideoutspeed == 1) {
+                bp = true;
+                slideoutspeed += speedinc;
+            } else if (bp) {
+                slideoutspeed = +speedinc;
+            } else {
+                slideoutspeed = -speedinc;
+            }
+        } else {
+            held = false;
+        }
+        robot.slideServoIn(slideoutspeed);
+
+
+
 
 
 
