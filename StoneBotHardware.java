@@ -18,6 +18,7 @@ public class StoneBotHardware {
     public CRServo hookServo = null;
     public Servo grabServo = null;
     public CRServo slideServo = null;
+    public CRServo eleServo = null;
 
     HardwareMap hwMap = null;
 
@@ -37,6 +38,7 @@ public class StoneBotHardware {
         //hookServo = hwMap.get(Servo.class,"hook_servo");
         grabServo = hwMap.get(Servo.class,"grab_servo");
         slideServo = hwMap.get(CRServo.class, "slide_servo");
+        eleServo = hwMap.get(CRServo.class, "ele_servo");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -49,6 +51,7 @@ public class StoneBotHardware {
         rightrearDrive.setPower(0);
         //hookServo.setPosition(0);
         grabServo.setPosition(0);
+        eleServo.setPower(0);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

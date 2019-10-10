@@ -9,7 +9,9 @@ public class StoneBotRobot {
     double hookServoMax = 1;
     double hookServoSpeed = 1;
     double slideServoSpeed = 0.5;
-    double grabServoMax = 1;
+    double grabServoMax = 0.6;
+    double grabServoMin = -1;
+    double eleServoSpeed = 1;
     public void  initrobot(){
         moving=false;
     }
@@ -58,15 +60,15 @@ public class StoneBotRobot {
         myself.leftrearDrive.setPower(power);
     }
 
-    double ServoGoToMIN = 0;
+    /*double ServoGoToMIN = 0;
 
     public void ServoGoToMIN() {
         double ServoGoToMIN = 0;
-    }
+    }*/
 
-    public void ServoGoToMAX() {
+    /*public void ServoGoToMAX() {
         double ServoGotoMax = 0;
-    }
+    }*/
 
     public void hookServoGoToMax(){
         //myself.hookServo.setPosition(hookServoMax);
@@ -81,19 +83,35 @@ public class StoneBotRobot {
         myself.hookServo.setPower(-hookServoSpeed);
     }
 
-    public void slideServoIn() {
-        myself.slideServo.setPower(slideServoSpeed);
+    public void slideServoIn(double Power) {
+        myself.slideServo.setPower(Power);
     }
 
-    public void slideServoOut()  {
-        myself.slideServo.setPower(-slideServoSpeed);
+    public void slideServoOut(double Power)  {
+        myself.slideServo.setPower(Power);
     }
 
-    public void slideServoStop() {
-        myself.slideServo.setPower(0);
+    public void eleServoIn(double Power) {
+        myself.eleServo.setPower(Power);
     }
 
-    public void grabServoGoToMax(){
+    public void eleServoOut(double Power) {
+        myself.eleServo.setPower(-Power);
+    }
+
+    public void grabServoGoToMax() {
+        myself.grabServo.setPosition(grabServoMax);
+    }
+
+    public void grabServoGoToMin() {
+        myself.grabServo.setPosition(grabServoMin);
+    }
+
+    public void grabServoStop() {
+        myself.grabServo.setPosition(0);
+    }
+
+    /*public void grabServoGoToMax(){
         myself.grabServo.setPosition(grabServoMax);
     }
 
@@ -103,5 +121,5 @@ public class StoneBotRobot {
 
     public void grabServoGoToPosition(double pos){
         myself.grabServo.setPosition(pos);
-    }
+    }*/
 }

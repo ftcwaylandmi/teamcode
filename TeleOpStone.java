@@ -35,31 +35,39 @@ public class TeleOpStone extends OpMode{
         robot.LeftDrive(left);
         robot.RightDrive(right);
 
-        if (gamepad2.x) {
+        if (gamepad2.y) {
             robot.hookServoGoToMax();
-        } else if (gamepad2.y) {
+        } else if (gamepad2.a) {
             robot.hookServoGoToMin();
         } else {
             robot.hookServoStop();
         }
 
-        if (gamepad2.a) {
-            robot.slideServoIn();
-        } else if (gamepad2.b) {
-            robot.slideServoOut();
-        } else {
-            robot.slideServoStop();
+        if (gamepad2.right_bumper) {
+            robot.grabServoGoToMax();
+        } else if (gamepad2.left_bumper) {
+                robot.grabServoGoToMin();
         }
 
+        double EIn = -1.00;
+        double EOut = 1.00;
+        EIn = gamepad2.left_stick_y;
+        EOut = -gamepad2.left_stick_y;
+        robot.eleServoIn(EIn);
+        robot.eleServoOut(EOut);
+
+        double SIn = -0.50;
+        double SOut = 0.50;
+        SIn = gamepad2.right_stick_x;
+        SOut = -gamepad2.right_stick_x;
+        robot.slideServoIn(SIn);
+        robot.slideServoOut(SOut);
 
 
-        /*if (gamepad2.a){
-            robot.grabServoGoToMax();
-        } else {
-            robot.grabServoGoToPosition(0);
-        }*/
-        telemetry.addData("left", left);
-        telemetry.addData("right", right);
+
+
+        /*telemetry.addData("left", left);
+        telemetry.addData("right", right);*/
     }
 
 
