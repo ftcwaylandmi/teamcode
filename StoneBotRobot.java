@@ -6,12 +6,12 @@ import org.firstinspires.ftc.teamcode.DemoBotHardware;
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
     boolean moving;
-    double hookServoMax = 1;
+
     double hookServoSpeed = 1;
-    double slideServoSpeed = 0.5;
+
     double grabServoMax = 0.6;
     double grabServoMin = -1;
-    double eleServoSpeed = 1;
+
     public void  initrobot(){
         moving=false;
     }
@@ -60,20 +60,8 @@ public class StoneBotRobot {
         myself.leftrearDrive.setPower(power);
     }
 
-    /*double ServoGoToMIN = 0;
-
-    public void ServoGoToMIN() {
-        double ServoGoToMIN = 0;
-    }*/
-
-    /*public void ServoGoToMAX() {
-        double ServoGotoMax = 0;
-    }*/
-
     public void hookServoGoToMax(){
-        //myself.hookServo.setPosition(hookServoMax);
         myself.hookServo.setPower(hookServoSpeed);
-
     }
     public void hookServoStop() {
         myself.hookServo.setPower(0);
@@ -111,15 +99,4 @@ public class StoneBotRobot {
         myself.grabServo.setPosition(0);
     }
 
-    /*public void grabServoGoToMax(){
-        myself.grabServo.setPosition(grabServoMax);
-    }
-
-    public void hookServoGoToPosition(double pos){
-        //myself.hookServo.setPosition(pos);
-    }
-
-    public void grabServoGoToPosition(double pos){
-        myself.grabServo.setPosition(pos);
-    }*/
 }
