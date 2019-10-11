@@ -60,15 +60,15 @@ public class TeleOpStone extends OpMode{
         robot.eleServoIn(EIn);
         robot.eleServoOut(EOut);
 
-        /*double SIn = -0.50;
-        double SOut = 0.50;
-        SIn = gamepad2.right_stick_x;
-        SOut = -gamepad2.right_stick_x;
+        double SIn = 0.00;
+        double SOut = 0.00;
+        SIn = -gamepad2.right_stick_x;
+        //SOut = gamepad2.right_stick_x;
         robot.slideServoIn(SIn);
-        robot.slideServoOut(SOut);*/
+        robot.slideServoOut(SOut);
 
 
-        if (gamepad2.right_stick_x  != 0.00) {
+        /*if (gamepad2.right_stick_x  != 0.00) {
             if (!held) {
                 slideoutspeed += speedinc;
             } else if (slideoutspeed == 1) {
@@ -83,7 +83,7 @@ public class TeleOpStone extends OpMode{
             held = false;
             slideoutspeed = 0;
         }
-        robot.slideServoOut(slideoutspeed);
+        robot.slideServoOut(slideoutspeed);*/
 
         /*telemetry.addData("left", left);
         telemetry.addData("right", right);*/
