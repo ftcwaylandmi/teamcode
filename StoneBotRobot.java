@@ -73,20 +73,8 @@ public class StoneBotRobot {
         myself.hookServo.setPower(-hookServoSpeed);
     }
 
-    public void slideServoIn(double Power) {
-        myself.slideMotor.setPower(Power);
-    }
-
-    public void slideServoOut(double Power)  {
-        myself.slideMotor.setPower(Power);
-    }
-
     public void eleServoIn(double Power) {
         myself.eleMotor.setPower(Power);
-    }
-
-    public void eleServoOut(double Power) {
-        myself.eleMotor.setPower(-Power);
     }
 
     public void grabServoGoToMax() {
@@ -97,17 +85,10 @@ public class StoneBotRobot {
         myself.grabServo.setPosition(grabServoMin);
     }
 
-    public void grabServoStop() {
-        myself.grabServo.setPosition(0);
-    }
-
     public void elbowServoIn(double Power) {
-        myself.elbowServo.setPower(Power);
+        myself.elbowMotor.setPower(Power);
     }
 
-    public void elbowServoOut(double Power) {
-        myself.elbowServo.setPower(-Power);
-    }
     public void winchServoGoToMax(){
         myself.winchServo.setPower(hookServoSpeed);
     }
@@ -119,4 +100,15 @@ public class StoneBotRobot {
     public void winchServoGoToMin() {
         myself.winchServo.setPower(-hookServoSpeed);
     }
+
+    public void slideMotor(double power) {
+        if (myself.InMaxSensor.getState()==false && power>0) {
+            power = 0;
+        }
+        if (myself.InMinSensor.getState()==false && power<0) {
+            power = 0;
+        }
+        myself.slideMotor.setPower(power);
+    }
+
 }
