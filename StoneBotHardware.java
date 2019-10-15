@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -14,11 +15,16 @@ public class StoneBotHardware {
     public DcMotor rightDrive = null;
     public DcMotor leftrearDrive = null;
     public DcMotor rightrearDrive = null;
+    public DcMotor eleMotor = null;
+    public DcMotor slideMotor = null;
+    public DcMotor elbowMotor = null;
+
+    public DigitalChannel InMaxSensor;
+    public DigitalChannel InMinSensor;
 
     public CRServo hookServo = null;
     public Servo grabServo = null;
-    public CRServo slideServo = null;
-    public CRServo eleServo = null;
+    public CRServo winchServo = null;
 
     HardwareMap hwMap = null;
 
@@ -33,12 +39,18 @@ public class StoneBotHardware {
         rightDrive=hwMap.get(DcMotor.class,"rfd");
         leftrearDrive=hwMap.get(DcMotor.class, "lfd");
         rightrearDrive=hwMap.get (DcMotor.class, "rfd");
+        elbowMotor = hwMap.get(DcMotor.class, "elbow_motor");
 
         hookServo = hwMap.get(CRServo.class, "hook_servo");
         //hookServo = hwMap.get(Servo.class,"hook_servo");
         grabServo = hwMap.get(Servo.class,"grab_servo");
-        slideServo = hwMap.get(CRServo.class, "slide_servo");
-        eleServo = hwMap.get(CRServo.class, "ele_servo");
+        winchServo = hwMap.get(CRServo.class, "winch_servo");
+
+        InMaxSensor = hwMap.get(DigitalChannel.class, "max_sensor");
+        InMinSensor = hwMap.get(DigitalChannel.class, "min_sensor");
+
+        slideMotor = hwMap.get(DcMotor.class, "slide_motor");
+        eleMotor = hwMap.get(DcMotor.class, "ele_motor");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -51,13 +63,17 @@ public class StoneBotHardware {
         rightrearDrive.setPower(0);
         //hookServo.setPosition(0);
         grabServo.setPosition(0);
-        eleServo.setPower(0);
-        slideServo.setPower(0);
+        eleMotor.setPower(0);
+        slideMotor.setPower(0);
+        elbowMotor.setPower(0);
+        winchServo.setPower(0);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        InMaxSensor.setMode(DigitalChannel.Mode.INPUT);
+        InMinSensor.setMode(DigitalChannel.Mode.INPUT);
 
     }
 
