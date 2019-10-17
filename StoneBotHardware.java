@@ -17,14 +17,13 @@ public class StoneBotHardware {
     public DcMotor rightrearDrive = null;
     public DcMotor eleMotor = null;
     public DcMotor slideMotor = null;
-    public DcMotor elbowMotor = null;
+
 
     public DigitalChannel InMaxSensor;
     public DigitalChannel InMinSensor;
 
     public CRServo hookServo = null;
     public Servo grabServo = null;
-    public CRServo winchServo = null;
 
     HardwareMap hwMap = null;
 
@@ -39,12 +38,10 @@ public class StoneBotHardware {
         rightDrive=hwMap.get(DcMotor.class,"rfd");
         leftrearDrive=hwMap.get(DcMotor.class, "lfd");
         rightrearDrive=hwMap.get (DcMotor.class, "rfd");
-        elbowMotor = hwMap.get(DcMotor.class, "elbow_motor");
 
         hookServo = hwMap.get(CRServo.class, "hook_servo");
         //hookServo = hwMap.get(Servo.class,"hook_servo");
         grabServo = hwMap.get(Servo.class,"grab_servo");
-        winchServo = hwMap.get(CRServo.class, "winch_servo");
 
         InMaxSensor = hwMap.get(DigitalChannel.class, "max_sensor");
         InMinSensor = hwMap.get(DigitalChannel.class, "min_sensor");
@@ -65,13 +62,14 @@ public class StoneBotHardware {
         grabServo.setPosition(0);
         eleMotor.setPower(0);
         slideMotor.setPower(0);
-        elbowMotor.setPower(0);
-        winchServo.setPower(0);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         InMaxSensor.setMode(DigitalChannel.Mode.INPUT);
         InMinSensor.setMode(DigitalChannel.Mode.INPUT);
 

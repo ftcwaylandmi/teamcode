@@ -85,22 +85,6 @@ public class StoneBotRobot {
         myself.grabServo.setPosition(grabServoMin);
     }
 
-    public void elbowServoIn(double Power) {
-        myself.elbowMotor.setPower(Power);
-    }
-
-    public void winchServoGoToMax(){
-        myself.winchServo.setPower(hookServoSpeed);
-    }
-
-    public void winchServoStop() {
-        myself.winchServo.setPower(0);
-    }
-
-    public void winchServoGoToMin() {
-        myself.winchServo.setPower(-hookServoSpeed);
-    }
-
     public void slideMotor(double power) {
         if (myself.InMaxSensor.getState()==false && power>0) {
             power = 0;

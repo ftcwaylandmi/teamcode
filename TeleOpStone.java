@@ -44,14 +44,6 @@ public class TeleOpStone extends OpMode{
             robot.hookServoStop();
         }
 
-        if (gamepad2.a) {
-            robot.winchServoGoToMax();
-        } else if (gamepad2.b) {
-            robot.winchServoGoToMin();
-        } else {
-            robot.winchServoStop();
-        }
-
         if (gamepad2.right_bumper) {
             robot.grabServoGoToMax();
         } else if (gamepad2.left_bumper) {
@@ -61,8 +53,6 @@ public class TeleOpStone extends OpMode{
         robot.eleServoIn(gamepad2.left_stick_y);
 
         robot.slideMotor(gamepad2.right_stick_x);
-
-        robot.elbowServoIn(gamepad2.right_stick_y);
 
         /*if (gamepad2.right_stick_x  != 0.00) {
             if (!held) {
