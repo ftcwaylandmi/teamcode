@@ -6,6 +6,8 @@ import org.firstinspires.ftc.teamcode.RuckusBotHardware;
 public class RuckusBotRobot {
     RuckusBotHardware myself = new RuckusBotHardware();
     boolean moving;
+    public double pinServoMax = 1;
+    public double pinServoMin = 0;
     public void  initrobot(){
         moving=false;
     }
@@ -44,22 +46,22 @@ public class RuckusBotRobot {
 
     public void ArmUp() {
         myself.armDrive.setPower(1);
-        moving = false
+        moving = false;
     }
 
     public void ArmDown(){
         myself.armDrive.setPower(-1);
-        moving = false
+        moving = false;
     }
 
     public void ElbowUp(){
         myself.elbowDrive.setPower(1);
-        moving = false
+        moving = false;
     }
 
     public void ElbowDown(){
         myself.elbowDrive.setPower(-1);
-        moving = false
+        moving = false;
     }
 
     public boolean ISMoving() {

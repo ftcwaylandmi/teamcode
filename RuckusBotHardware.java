@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 
@@ -27,8 +28,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
         leftDrive=hwMap.get(DcMotor.class,"lfd");
         rightDrive=hwMap.get(DcMotor.class,"rfd");
         armDrive=hwMap.get(DcMotor.class,"ad");
-        elbowDrive=hwMap.get(DcMotor.class,"ed")
-        pinServo=hwMap.get(Servo.class,"pin_servo")
+        elbowDrive=hwMap.get(DcMotor.class,"ed");
+        pinServo=hwMap.get(Servo.class,"pin_servo");
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         armDrive.setDirection(DcMotor.Direction.FORWARD);

@@ -74,7 +74,9 @@ public class StoneBotRobot {
     }
 
     public void eleServoIn(double Power) {
-        myself.eleMotor.setPower(Power);
+        if ((myself.eleMotor.getCurrentPosition() > myself.elevatormin) && (Power < 0)){
+            myself.eleMotor.setPower(Power);
+        }
     }
 
     public void grabServoGoToMax() {
