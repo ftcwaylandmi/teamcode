@@ -51,7 +51,8 @@ public class TeleOpStone extends OpMode{
         }
 
         robot.eleServoIn(gamepad2.left_stick_y);
-
+        telemetry.addData("eleEncoder", robot.myself.eleMotor.getCurrentPosition());
+        telemetry.addData("elePower", gamepad2.left_stick_y);
         robot.slideMotor(gamepad2.right_stick_x);
 
         /*if (gamepad2.right_stick_x  != 0.00) {

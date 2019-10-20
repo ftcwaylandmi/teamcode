@@ -46,10 +46,12 @@ public class DemoBotRobot {
 
     public void RightDrive(double power){
         myself.rightDrive.setPower(power);
+        myself.rightrearDrive.setPower(power);
     }
 
     public void LeftDrive(double power){
         myself.leftDrive.setPower(power);
+        myself.leftrearDrive.setPower(power);
     }
 
     double ServoGoToMIN = 0;
