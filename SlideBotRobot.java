@@ -12,7 +12,9 @@ public class SlideBotRobot {
     }
     public void drive (double lpower, double rpower){
         myself.rightDrive.setPower(rpower);
+        myself.rightrearDrive.setPower(rpower);
         myself.leftDrive.setPower(lpower);
+        myself.leftrearDrive.setPower(lpower);
         moving=true;
     }
 

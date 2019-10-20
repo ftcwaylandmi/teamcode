@@ -13,6 +13,10 @@ public class StoneBotRobot {
     double grabServoMax = 0.6;
     double grabServoMin = -1;
 
+    private int elevatordistance = 1213;
+    private int startingencodervalue = 0;
+    private int maxelevator = 0;
+
     public void  initrobot(){
         moving=false;
     }
@@ -24,6 +28,8 @@ public class StoneBotRobot {
 
     public void initHW(HardwareMap ahwMap) {
         myself.init(ahwMap);
+        startingencodervalue = myself.eleMotor.getCurrentPosition();
+        maxelevator = startingencodervalue - elevatordistance;
 
     }
     public void DriveReverse(double power) {
@@ -74,9 +80,15 @@ public class StoneBotRobot {
     }
 
     public void eleServoIn(double Power) {
-        //if ((myself.eleMotor.getCurrentPosition() > myself.elevatormin) && (Power < 0)){
-            myself.eleMotor.setPower(Power);
-        //}
+
+        if ((myself.eleMotor.getCurrentPosition() < maxelevator) && (Power < 0)){
+            myself.eleMotor.setPower(0);
+        } else if (( myself.eleMotor.getCurrentPosition() > startingencodervalue) && (Power >0)){
+            myself.eleMotor.setPower(0);
+        } else {
+            myself.eleMotor.setPower(Power/2);
+        }
+
     }
 
     public void grabServoGoToMax() {
