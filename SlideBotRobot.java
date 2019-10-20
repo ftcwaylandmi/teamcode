@@ -52,4 +52,13 @@ public class SlideBotRobot {
         myself.leftDrive.setPower(power);
         myself.leftrearDrive.setPower(power);
     }
+
+
+    public void slide(double power){
+        myself.rightrearDrive.setPower(-power);
+        myself.rightDrive.setPower(power);
+        myself.leftrearDrive.setPower(power);
+        myself.leftDrive.setPower(-power);
+
+    }
 }

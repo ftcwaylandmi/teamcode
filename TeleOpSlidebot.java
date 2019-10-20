@@ -27,17 +27,11 @@ public class TeleOpSlidebot extends OpMode{
 
     @Override
     public void loop(){
-        double left = 0.00;
-        double right = 0.00;
-        left = -gamepad1.left_stick_y;
-        right = -gamepad1.right_stick_y;
-        robot.LeftDrive(left);
-        robot.RightDrive(right);
+        robot.LeftDrive(-gamepad1.left_stick_y);
+        robot.RightDrive(-gamepad1.right_stick_y);
 
+        robot.slide(gamepad1.left_stick_x);
 
-
-        telemetry.addData("left", left);
-        telemetry.addData("right", right);
     }
 
 
