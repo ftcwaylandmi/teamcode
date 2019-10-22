@@ -32,10 +32,14 @@ public class TeleOpStone extends OpMode{
 
     @Override
     public void loop() {
+        if (gamepad1.right_bumper) {
+            robot.LeftDrive(gamepad1.left_stick_y/2);
+            robot.RightDrive(gamepad1.right_stick_y/2);
 
-        robot.LeftDrive(-gamepad1.left_stick_y);
-        robot.RightDrive(-gamepad1.right_stick_y);
-
+        } else {
+            robot.LeftDrive(gamepad1.left_stick_y);
+            robot.RightDrive(gamepad1.right_stick_y);
+        }
         if (gamepad2.y) {
             robot.hookServoGoToMax();
         } else if (gamepad2.x) {
