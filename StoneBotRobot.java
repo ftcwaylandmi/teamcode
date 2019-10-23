@@ -35,7 +35,7 @@ public class StoneBotRobot {
         myself.init(ahwMap);
         startingencodervalue = myself.eleMotor.getCurrentPosition();
         maxelevator = startingencodervalue - elevatordistance;
-
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public void DriveReverse(double power) {
@@ -113,6 +113,46 @@ public class StoneBotRobot {
             power = 0;
         }
         myself.slideMotor.setPower(power);
+    }
+
+    public void moveRobot(double axial, double lateral, double yaw) {
+        setAxial(axial);
+        setLateral(lateral);
+        setYaw(yaw);
+        moveRobot();
+    }
+
+    public void moveRobot() {
+        // calculate required motor speeds to acheive axis motions
+        double left = driveYaw - driveAxial - (driveLateral * 0.5);
+        double right = driveYaw + driveAxial - (driveLateral * 0.5);
+
+        // normalize all motor speeds so no values exceeds 100%.
+        double max = Math.max(Math.abs(left), Math.abs(right));
+        if (max > 1.0)
+        {
+            right /= max;
+            left /= max;
+        }
+
+        // Set drive motor power levels.
+        leftDrive.setPower(left);
+        rightDrive.setPower(right);
+
+        // Display Telemetry
+        myOpMode.telemetry.addData("Axes  ", "A[%+5.2f], L[%+5.2f], Y[%+5.2f]", driveAxial, driveLateral, driveYaw);
+        myOpMode.telemetry.addData("Wheels", "L[%+5.2f], R[%+5.2f]", left, right);
+    }
+
+
+    public void setAxial(double axial)      {driveAxial = Range.clip(axial, -1, 1);}
+    public void setLateral(double lateral)  {driveLateral = Range.clip(lateral, -1, 1); }
+    public void setYaw(double yaw)          {driveYaw = Range.clip(yaw, -1, 1); }
+
+    public void setMode(DcMotor.RunMode mode ) {
+        leftDrive.setMode(mode);
+        rightDrive.setMode(mode);
+    
     }
 
 }
