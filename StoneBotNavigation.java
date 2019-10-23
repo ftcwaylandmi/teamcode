@@ -34,8 +34,15 @@ public class StoneBotNavigation {
     private StoneBotRobot myRobot;
     private VuforiaTrackables targets;
 
+    private static final int     MAX_TARGETS    =   4;
+    private static final double  ON_AXIS        =  10;      // Within 1.0 cm of target center-line
+    private static final double  CLOSE_ENOUGH   =  20;      // Within 2.0 cm of final target standoff
 
-    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
+    public  static final double  YAW_GAIN       =  0.018;   // Rate at which we respond to heading error
+    public  static final double  LATERAL_GAIN   =  0.0027;  // Rate at which we respond to off-axis error
+    public  static final double  AXIAL_GAIN     =  0.0017;  // Rate at which we respond to target distance errors
+
+    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = VuforiaLocalizer.CameraDirection.BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
 
     private static final String VUFORIA_KEY =
@@ -46,7 +53,15 @@ public class StoneBotNavigation {
     private static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
 
 
-
+        private boolean             targetFound;    // set to true if Vuforia is currently tracking a target
+    private String              targetName;     // Name of the currently tracked target
+    private double              robotX;         // X displacement from target center
+    private double              robotY;         // Y displacement from target center
+    private double              robotBearing;   // Robot's rotation around the Z axis (CCW is positive)
+    private double              targetRange;    // Range from robot's center to target in mm
+    private double              targetBearing;  // Heading of the target , relative to the robot's unrotated center
+    private double              relativeBearing;// Heading to the target from the robot's current bearing.
+                                                //   eg: a Positive RelativeBearing means the robot must turn CCW to point at the target image.
 
 
     // Constant for Stone Target
@@ -74,7 +89,20 @@ public class StoneBotNavigation {
     Orientation rotation;
     VectorF translation;
     List<VuforiaTrackable> allTrackables;
-    VuforiaLocalizer.Parameters parameters;
+
+     public Robot_Navigation(){
+
+        targetFound = false;
+        targetName = null;
+        targets = null;
+
+        robotX = 0;
+        robotY = 0;
+        targetRange = 0;
+        targetBearing = 0;
+        robotBearing = 0;
+        relativeBearing = 0;
+    }
 
     public void initVuforia(LinearOpMode opMode, StoneBotRobot robot) {
         myOpMode = opMode;
@@ -82,12 +110,12 @@ public class StoneBotNavigation {
 
 
         int cameraMonitorViewId = ahwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", ahwMap.appContext.getPackageName());
-        parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection   = CAMERA_CHOICE;
         //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+        VuforiaLocalizer vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
@@ -121,7 +149,7 @@ public class StoneBotNavigation {
         rear2.setName("Rear Perimeter 2");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        allTrackables = new ArrayList<VuforiaTrackable>();
+        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsSkyStone);
 
         stoneTarget.setLocation(OpenGLMatrix
@@ -220,6 +248,94 @@ public class StoneBotNavigation {
         }
 
 
+    }
+
+     public boolean targetsAreVisible()  {
+
+        int targetTestID = 0;
+
+        // Check each target in turn, but stop looking when the first target is found.
+        while ((targetTestID < MAX_TARGETS) && !targetIsVisible(targetTestID)) {
+            targetTestID++ ;
+        }
+
+        return (targetFound);
+    }
+
+     public void activateTracking() {
+
+        // Start tracking any of the defined targets
+        if (targets != null)
+            targets.activate();
+    }
+
+    public boolean cruiseControl(double standOffDistance) {
+        boolean closeEnough;
+
+        // Priority #1 Rotate to always be pointing at the target (for best target retention).
+        double Y  = (relativeBearing * YAW_GAIN);
+
+        // Priority #2  Drive laterally based on distance from X axis (same as y value)
+        double L  =(robotY * LATERAL_GAIN);
+
+        // Priority #3 Drive forward based on the desiredHeading target standoff distance
+        double A  = (-(robotX + standOffDistance) * AXIAL_GAIN);
+
+        // Send the desired axis motions to the robot hardware.
+        myRobot.setYaw(Y);
+        myRobot.setAxial(A);
+        myRobot.setLateral(L);
+
+        // Determine if we are close enough to the target for action.
+        closeEnough = ( (Math.abs(robotX + standOffDistance) < CLOSE_ENOUGH) &&
+                        (Math.abs(robotY) < ON_AXIS));
+
+        return (closeEnough);
+    }
+    public boolean targetIsVisible(int targetId) {
+
+        VuforiaTrackable target = targets.get(targetId);
+        VuforiaTrackableDefaultListener listener = (VuforiaTrackableDefaultListener)target.getListener();
+        OpenGLMatrix location  = null;
+
+        // if we have a target, look for an updated robot position
+        if ((target != null) && (listener != null) && listener.isVisible()) {
+            targetFound = true;
+            targetName = target.getName();
+
+            // If we have an updated robot location, update all the relevant tracking information
+            location  = listener.getUpdatedRobotLocation();
+            if (location != null) {
+
+                // Create a translation and rotation vector for the robot.
+                VectorF trans = location.getTranslation();
+                Orientation rot = Orientation.getOrientation(location, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+
+                // Robot position is defined by the standard Matrix translation (x and y)
+                robotX = trans.get(0);
+                robotY = trans.get(1);
+
+                // Robot bearing (in +vc CCW cartesian system) is defined by the standard Matrix z rotation
+                robotBearing = rot.thirdAngle;
+
+                // target range is based on distance from robot position to origin.
+                targetRange = Math.hypot(robotX, robotY);
+
+                // target bearing is based on angle formed between the X axis to the target range line
+                targetBearing = Math.toDegrees(-Math.asin(robotY / targetRange));
+
+                // Target relative bearing is the target Heading relative to the direction the robot is pointing.
+                relativeBearing = targetBearing - robotBearing;
+            }
+            targetFound = true;
+        }
+        else  {
+            // Indicate that there is no target visible
+            targetFound = false;
+            targetName = "None";
+        }
+
+        return targetFound;
     }
 
 }
