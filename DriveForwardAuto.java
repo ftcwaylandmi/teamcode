@@ -63,6 +63,19 @@ public class DriveForwardAuto extends LinearOpMode {
         }
         robot.RightDrive(0);
         robot.LeftDrive(0);
+
+        robot.LeftDrive(1);
+        robot.RightDrive(-1);
+        int z = 0;
+        while (z < 200){
+            z++;
+        }
+        robot.RightDrive(0);
+        robot.LeftDrive(0);
+
+
+
+
         telemetry.addData("Complete", "done");
         telemetry.update();
 
