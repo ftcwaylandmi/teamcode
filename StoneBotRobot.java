@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.DemoBotHardware;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
@@ -14,8 +16,12 @@ public class StoneBotRobot {
     double grabServoMin = -1;
 
     private int elevatordistance = 1230; //Still need to work on.
-    private int startingencodervalue = 0;
+    private int startingencodervalueE = 0;
     private int maxelevator = 0;
+
+    private int slidedistance = 0; //not ready
+    private int startingencodervalueS = 0;
+    private int maxslide = 0;
 
     private int InchesPerSecond = 2;
 
@@ -30,8 +36,11 @@ public class StoneBotRobot {
 
     public void initHW(HardwareMap ahwMap) {
         myself.init(ahwMap);
-        startingencodervalue = myself.eleMotor.getCurrentPosition();
-        maxelevator = startingencodervalue - elevatordistance;
+        startingencodervalueE = myself.eleMotor.getCurrentPosition();
+        maxelevator = startingencodervalueE - elevatordistance;
+
+        startingencodervalueS = myself.slideMotor.getCurrentPosition();
+        maxslide = startingencodervalueS - slidedistance;
 
     }
     public void DriveReverse(double power) {
@@ -85,10 +94,22 @@ public class StoneBotRobot {
 
         if ((myself.eleMotor.getCurrentPosition() < maxelevator) && (Power < 0)){
             myself.eleMotor.setPower(0);
-        } else if (( myself.eleMotor.getCurrentPosition() > startingencodervalue) && (Power >0)){
+        } else if (( myself.eleMotor.getCurrentPosition() > startingencodervalueE) && (Power >0)){
             myself.eleMotor.setPower(0);
         } else {
-            myself.eleMotor.setPower(Power/2);
+            myself.eleMotor.setPower(Power/4);
+        }
+
+    }
+
+    public void slideMotorMax(double Power) {
+
+        if ((myself.slideMotor.getCurrentPosition() < maxslide) && (Power < 0)){
+            myself.slideMotor.setPower(0);
+        } else if (( myself.slideMotor.getCurrentPosition() > startingencodervalueS) && (Power >0)){
+            myself.slideMotor.setPower(0);
+        } else {
+            myself.slideMotor.setPower(Power/2);
         }
 
     }
@@ -101,7 +122,7 @@ public class StoneBotRobot {
         myself.grabServo.setPosition(grabServoMin);
     }
 
-    public void slideMotor(double power) {
+    /*public void slideMotor(double power) {
         if (myself.InMaxSensor.getState()==false && power>0) {
             power = 0;
         }
@@ -109,7 +130,7 @@ public class StoneBotRobot {
             power = 0;
         }
         myself.slideMotor.setPower(power);
-    }
+    }*/
 
     public void DriveByInches( int inches) {
         int waitTime = 0;
@@ -126,8 +147,11 @@ public class StoneBotRobot {
             myself.rightDrive.setPower(-1);
             myself.rightrearDrive.setPower(-1);
         }
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < waitTime) {
 
-        Thread.sleep(waitTime);
+        }
         myself.leftDrive.setPower(0);
         myself.leftrearDrive.setPower(0);
         myself.rightDrive.setPower(0);

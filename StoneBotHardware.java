@@ -26,6 +26,8 @@ public class StoneBotHardware {
     public Servo grabServo = null;
 
     public int elevatormin;
+    public int slidemin;
+
     HardwareMap hwMap = null;
 
     public StoneBotHardware() {
@@ -71,6 +73,9 @@ public class StoneBotHardware {
 
         eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevatormin = eleMotor.getCurrentPosition();
+
+        slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slidemin = slideMotor.getCurrentPosition();
 
         InMaxSensor.setMode(DigitalChannel.Mode.INPUT);
         InMinSensor.setMode(DigitalChannel.Mode.INPUT);
