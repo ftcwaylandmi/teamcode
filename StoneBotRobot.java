@@ -175,7 +175,11 @@ public class StoneBotRobot {
             myself.rightrearDrive.setPower(-1);
         }
 
-        Thread.sleep(waitTime);
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < waitTime) {
+
+        }
         myself.leftDrive.setPower(0);
         myself.leftrearDrive.setPower(0);
         myself.rightDrive.setPower(0);
