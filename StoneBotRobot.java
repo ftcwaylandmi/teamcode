@@ -13,7 +13,7 @@ public class StoneBotRobot {
     double grabServoMax = 0.6;
     double grabServoMin = -1;
 
-    private int elevatordistance = 1213;
+    private int elevatordistance = 1230; //Still need to work on.
     private int startingencodervalue = 0;
     private int maxelevator = 0;
 
