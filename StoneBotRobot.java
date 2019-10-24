@@ -24,6 +24,7 @@ public class StoneBotRobot {
     private int maxslide = 0;
 
     private int InchesPerSecond = 2;
+    private int DegreesPerSecond = 1;
 
     public void  initrobot(){
         moving=false;
