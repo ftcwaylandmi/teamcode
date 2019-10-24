@@ -134,4 +134,28 @@ public class StoneBotRobot {
         myself.rightrearDrive.setPower(0);
 
     }
+
+    public void TurnByDegrees( int degrees) {
+        int waitTime = 0;
+        if (degrees > 0) {
+            waitTime = degrees * DegreesPerSecond;
+            myself.leftDrive.setPower(1);
+            myself.leftrearDrive.setPower(1);
+            myself.rightDrive.setPower(1);
+            myself.rightrearDrive.setPower(1);
+        } else {
+               waitTime = -degrees * DegreesPerSecond;
+            myself.leftDrive.setPower(-1);
+            myself.leftrearDrive.setPower(-1);
+            myself.rightDrive.setPower(-1);
+            myself.rightrearDrive.setPower(-1);
+        }
+
+        Thread.sleep(waitTime);
+        myself.leftDrive.setPower(0);
+        myself.leftrearDrive.setPower(0);
+        myself.rightDrive.setPower(0);
+        myself.rightrearDrive.setPower(0);
+
+    }
 }
