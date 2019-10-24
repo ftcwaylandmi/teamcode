@@ -17,6 +17,8 @@ public class StoneBotRobot {
     private int startingencodervalue = 0;
     private int maxelevator = 0;
 
+    private int InchesPerSecond = 2;
+
     public void  initrobot(){
         moving=false;
     }
@@ -109,4 +111,27 @@ public class StoneBotRobot {
         myself.slideMotor.setPower(power);
     }
 
+    public void DriveByInches( int inches) {
+        int waitTime = 0;
+        if (inches > 0) {
+            waitTime = inches * InchesPerSecond;
+            myself.leftDrive.setPower(1);
+            myself.leftrearDrive.setPower(1);
+            myself.rightDrive.setPower(1);
+            myself.rightrearDrive.setPower(1);
+        } else {
+               waitTime = -inches * InchesPerSecond;
+            myself.leftDrive.setPower(-1);
+            myself.leftrearDrive.setPower(-1);
+            myself.rightDrive.setPower(-1);
+            myself.rightrearDrive.setPower(-1);
+        }
+
+        Thread.sleep(waitTime);
+        myself.leftDrive.setPower(0);
+        myself.leftrearDrive.setPower(0);
+        myself.rightDrive.setPower(0);
+        myself.rightrearDrive.setPower(0);
+
+    }
 }
