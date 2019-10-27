@@ -12,14 +12,14 @@ public class StoneBotRobot {
     double hookServoSpeed = 1;
     double winchServoSpeed = 1;
 
-    double grabServoMax = 0.6;
+    double grabServoMax = 1;
     double grabServoMin = -1;
 
     private int elevatordistance = 1230; //Still need to work on.
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
 
-    private int slidedistance = 0; //not ready
+    private int slidedistance = 639;
     private int startingencodervalueS = 0;
     private int maxslide = 0;
 
@@ -27,6 +27,7 @@ public class StoneBotRobot {
     private int DegreesPerSecond = 1;
 
     public void  initrobot(){
+
         moving=false;
     }
     public void drive (double lpower, double rpower){
@@ -34,6 +35,7 @@ public class StoneBotRobot {
         myself.leftDrive.setPower(lpower);
         moving=true;
     }
+
 
     public void initHW(HardwareMap ahwMap) {
         myself.init(ahwMap);
@@ -110,7 +112,7 @@ public class StoneBotRobot {
         } else if (( myself.slideMotor.getCurrentPosition() > startingencodervalueS) && (Power >0)){
             myself.slideMotor.setPower(0);
         } else {
-            myself.slideMotor.setPower(Power/2);
+            myself.slideMotor.setPower(Power*0.75);
         }
 
     }
