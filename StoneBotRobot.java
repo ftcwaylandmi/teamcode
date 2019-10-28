@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.DemoBotHardware;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
-    boolean moving;
+    private boolean moving;
 
     double hookServoSpeed = 1;
     double winchServoSpeed = 1;
@@ -19,12 +20,13 @@ public class StoneBotRobot {
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
 
-    private int slidedistance = 639;
+    private int slideLoad = 45;
+    private int slidedistance = 672;
     private int startingencodervalueS = 0;
     private int maxslide = 0;
 
-    private int InchesPerSecond = 2;
-    private int DegreesPerSecond = 1;
+    private double InchesPerSecond = 1/4;
+    private double DegreesPerSecond = 1/4;
 
     public void  initrobot(){
 
@@ -43,7 +45,7 @@ public class StoneBotRobot {
         maxelevator = startingencodervalueE - elevatordistance;
 
         startingencodervalueS = myself.slideMotor.getCurrentPosition();
-        maxslide = startingencodervalueS - slidedistance;
+        maxslide = startingencodervalueS + slidedistance;
 
     }
     public void DriveReverse(double power) {
@@ -117,6 +119,15 @@ public class StoneBotRobot {
 
     }
 
+    public void slideToLoad() {
+
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        int dest = myself.slideMotor.getCurrentPosition() + slideLoad;
+        myself.slideMotor.setTargetPosition(dest);
+        myself.slideMotor.setPower(1);
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     public void grabServoGoToMax() {
         myself.grabServo.setPosition(grabServoMax);
     }
@@ -136,57 +147,68 @@ public class StoneBotRobot {
     }*/
 
     public void DriveByInches( int inches) {
-        int waitTime = 0;
+        moving = true;
+        double power = 1;
+        double waitTime = 0.00;
         if (inches > 0) {
             waitTime = inches * InchesPerSecond;
-            myself.leftDrive.setPower(1);
-            myself.leftrearDrive.setPower(1);
-            myself.rightDrive.setPower(1);
-            myself.rightrearDrive.setPower(1);
+            myself.leftDrive.setPower(power);
+            myself.leftrearDrive.setPower(power);
+            myself.rightDrive.setPower(power);
+            myself.rightrearDrive.setPower(power);
         } else {
-               waitTime = -inches * InchesPerSecond;
-            myself.leftDrive.setPower(-1);
-            myself.leftrearDrive.setPower(-1);
-            myself.rightDrive.setPower(-1);
-            myself.rightrearDrive.setPower(-1);
+            power = power * -1;
+            waitTime = -inches * InchesPerSecond;
+            myself.leftDrive.setPower(power);
+            myself.leftrearDrive.setPower(power);
+            myself.rightDrive.setPower(power);
+            myself.rightrearDrive.setPower(power);
         }
         ElapsedTime timer =  new ElapsedTime();
         timer.reset();
-        while (timer.milliseconds() < waitTime) {
+        while (timer.milliseconds() < (waitTime* 1000)) {
 
         }
         myself.leftDrive.setPower(0);
         myself.leftrearDrive.setPower(0);
         myself.rightDrive.setPower(0);
         myself.rightrearDrive.setPower(0);
+        moving = false;
 
     }
 
     public void TurnByDegrees( int degrees) {
-        int waitTime = 0;
+        moving = true;
+
+        double waitTime = 0;
         if (degrees > 0) {
             waitTime = degrees * DegreesPerSecond;
             myself.leftDrive.setPower(1);
             myself.leftrearDrive.setPower(1);
-            myself.rightDrive.setPower(1);
-            myself.rightrearDrive.setPower(1);
-        } else {
-               waitTime = -degrees * DegreesPerSecond;
-            myself.leftDrive.setPower(-1);
-            myself.leftrearDrive.setPower(-1);
             myself.rightDrive.setPower(-1);
             myself.rightrearDrive.setPower(-1);
+        } else {
+            waitTime = -degrees * DegreesPerSecond;
+            myself.leftDrive.setPower(-1);
+            myself.leftrearDrive.setPower(-1);
+            myself.rightDrive.setPower(1);
+            myself.rightrearDrive.setPower(1);
         }
 
         ElapsedTime timer =  new ElapsedTime();
         timer.reset();
-        while (timer.milliseconds() < waitTime) {
+        while (timer.milliseconds() < (waitTime*1000)) {
 
         }
         myself.leftDrive.setPower(0);
         myself.leftrearDrive.setPower(0);
         myself.rightDrive.setPower(0);
         myself.rightrearDrive.setPower(0);
+        moving = false;
 
+    }
+
+    public boolean IsMoving (){
+        return moving;
     }
 }

@@ -58,11 +58,25 @@ public class LBBlockGrab extends LinearOpMode {
 
 
         robot.DriveByInches(24);
-        robot.TurnByDegrees(75);
-        robot.DriveByInches(48);
-        robot.TurnByDegrees(90);
-        robot.DriveByInches(3);
+        while(robot.IsMoving()){
 
+        }
+        robot.TurnByDegrees(75);
+        while(robot.IsMoving()){
+
+        }
+        robot.DriveByInches(48);
+        while(robot.IsMoving()){
+
+        }
+        robot.TurnByDegrees(90);
+        while(robot.IsMoving()){
+
+        }
+        robot.DriveByInches(3);
+        while(robot.IsMoving()){
+
+        }
 
 
 
@@ -80,6 +94,13 @@ public class LBBlockGrab extends LinearOpMode {
 
         telemetry.addData("Complete", "done");
         telemetry.update();
+
+    }
+
+    public void Wait() {
+        while(robot.IsMoving()){
+
+        }
 
     }
 }
