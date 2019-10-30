@@ -56,62 +56,22 @@ public class RRBlockGrab extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        robot.DriveByInches(36);
-        while(robot.IsMoving()){
-
-        }
-        robot.TurnByDegrees(-90);
-        while(robot.IsMoving()){
-
-        }
-
-        robot.hookServoGoToMin();
-        while(robot.IsMoving()){
-
-        }
-
-        robot.DriveByInches(24);
-        while(robot.IsMoving()){
-
-        }
-
-        robot.hookServoGoToMax();
-        while(robot.IsMoving()){
-
-        }
-
-        robot.TurnByDegrees(-45);
-        while(robot.IsMoving()){
-
-        }
-        robot.DriveByInches(24);
-        while(robot.IsMoving()){
-
-        }
-        robot.TurnByDegrees(45);
-        while(robot.IsMoving()){
-
-        }
+        robot.DriveByInches(-30);
+        robot.hookServoDown();
+        robot.wait(500);
+        robot.ArcRight(82, true);
+        robot.hookServoUp();
+        robot.wait(500);
+        robot.DriveByInches(-30);
         robot.DriveByInches(48);
-        while(robot.IsMoving()){
-
-        }
-        robot.TurnByDegrees(45);
-        while(robot.IsMoving()){
-
-        }
-        robot.DriveByInches(24);
-        while(robot.IsMoving()){
-
-        }
-        robot.TurnByDegrees(45);
-        while(robot.IsMoving()){
-
-        }
-        robot.DriveByInches(60);
-        while(robot.IsMoving()){
-
-        }
+        //robot.TurnByDegrees(-45);
+        //robot.DriveByInches(24);
+        //robot.TurnByDegrees(45);
+        //robot.DriveByInches(48);
+        //robot.TurnByDegrees(45);
+        //robot.DriveByInches(24);
+        //robot.TurnByDegrees(45);
+        //robot.DriveByInches(60);
 
 
 

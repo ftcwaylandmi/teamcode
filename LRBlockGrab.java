@@ -58,11 +58,11 @@ public class LRBlockGrab extends LinearOpMode {
 
 
         robot.DriveByInches(24);
-        robot.TurnByDegrees(75);
-       // robot.DriveByInches(48);
-       // robot.TurnByDegrees(90);
-       // robot.DriveByInches(3);
-       // robot.slideToLoad();
+        robot.TurnByDegrees(-75);
+        robot.DriveByInches(48);
+        robot.TurnByDegrees(-90);
+        robot.DriveByInches(3);
+        robot.slideToLoad();
 
 
 

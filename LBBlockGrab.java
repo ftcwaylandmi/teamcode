@@ -58,25 +58,10 @@ public class LBBlockGrab extends LinearOpMode {
 
 
         robot.DriveByInches(24);
-        while(robot.IsMoving()){
-
-        }
         robot.TurnByDegrees(75);
-        while(robot.IsMoving()){
-
-        }
         robot.DriveByInches(48);
-        while(robot.IsMoving()){
-
-        }
         robot.TurnByDegrees(90);
-        while(robot.IsMoving()){
-
-        }
         robot.DriveByInches(3);
-        while(robot.IsMoving()){
-
-        }
 
 
 

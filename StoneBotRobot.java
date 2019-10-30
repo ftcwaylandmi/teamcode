@@ -24,9 +24,10 @@ public class StoneBotRobot {
     private int slidedistance = 672;
     private int startingencodervalueS = 0;
     private int maxslide = 0;
+    private int hookservoTime = 2050;
 
-    private double InchesPerSecond = 1/4;
-    private double DegreesPerSecond = 1/4;
+    private double InchesPerSecond = .33;
+    private double DegreesPerSecond = .46;
 
     public void  initrobot(){
 
@@ -81,6 +82,37 @@ public class StoneBotRobot {
     public void LeftDrive(double power){
         myself.leftDrive.setPower(power);
         myself.leftrearDrive.setPower(power);
+    }
+
+    public void hookServoDown() {
+        myself.hookServo.setPower(-1);
+
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < hookservoTime) {
+
+        }
+        myself.hookServo.setPower(0);
+    }
+
+
+    public void hookServoUp() {
+        myself.hookServo.setPower(1);
+
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < hookservoTime) {
+
+        }
+        myself.hookServo.setPower(0);
+    }
+
+    public void wait(int sleeptime) {
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < sleeptime) {
+
+        }
     }
 
     public void hookServoGoToMax(){
@@ -151,13 +183,13 @@ public class StoneBotRobot {
         double power = 1;
         double waitTime = 0.00;
         if (inches > 0) {
+            power = power * -1;
             waitTime = inches * InchesPerSecond;
             myself.leftDrive.setPower(power);
             myself.leftrearDrive.setPower(power);
             myself.rightDrive.setPower(power);
             myself.rightrearDrive.setPower(power);
         } else {
-            power = power * -1;
             waitTime = -inches * InchesPerSecond;
             myself.leftDrive.setPower(power);
             myself.leftrearDrive.setPower(power);
@@ -166,7 +198,36 @@ public class StoneBotRobot {
         }
         ElapsedTime timer =  new ElapsedTime();
         timer.reset();
-        while (timer.milliseconds() < (waitTime* 1000)) {
+        while (timer.milliseconds() < (waitTime* 100)) {
+
+        }
+        myself.leftDrive.setPower(0);
+        myself.leftrearDrive.setPower(0);
+        myself.rightDrive.setPower(0);
+        myself.rightrearDrive.setPower(0);
+        moving = false;
+
+    }
+
+    public void ArcRight( int arc, boolean holdarmdown) {
+        moving = true;
+        double power = 1;
+
+        double waitTime = 0;
+        if (holdarmdown) {
+            myself.hookServo.setPower(-0.15);
+        }
+            waitTime = arc * InchesPerSecond;
+            myself.leftDrive.setPower(-power);
+            myself.leftrearDrive.setPower(-power);
+            myself.rightDrive.setPower(-power * 0.55);
+            myself.rightrearDrive.setPower(-power * 0.55);
+            moving = true;
+
+
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < (waitTime*100)) {
 
         }
         myself.leftDrive.setPower(0);
@@ -179,25 +240,26 @@ public class StoneBotRobot {
 
     public void TurnByDegrees( int degrees) {
         moving = true;
+        double power = 1;
 
         double waitTime = 0;
         if (degrees > 0) {
             waitTime = degrees * DegreesPerSecond;
-            myself.leftDrive.setPower(1);
-            myself.leftrearDrive.setPower(1);
-            myself.rightDrive.setPower(-1);
-            myself.rightrearDrive.setPower(-1);
+            myself.leftDrive.setPower(-power);
+            myself.leftrearDrive.setPower(-power);
+            myself.rightDrive.setPower(power);
+            myself.rightrearDrive.setPower(power);
         } else {
             waitTime = -degrees * DegreesPerSecond;
-            myself.leftDrive.setPower(-1);
-            myself.leftrearDrive.setPower(-1);
-            myself.rightDrive.setPower(1);
-            myself.rightrearDrive.setPower(1);
+            myself.leftDrive.setPower(power);
+            myself.leftrearDrive.setPower(power);
+            myself.rightDrive.setPower(-power);
+            myself.rightrearDrive.setPower(-power);
         }
 
         ElapsedTime timer =  new ElapsedTime();
         timer.reset();
-        while (timer.milliseconds() < (waitTime*1000)) {
+        while (timer.milliseconds() < (waitTime*10)) {
 
         }
         myself.leftDrive.setPower(0);
