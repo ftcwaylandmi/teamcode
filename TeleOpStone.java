@@ -55,10 +55,14 @@ public class TeleOpStone extends OpMode{
         }
 
         robot.eleServoIn(gamepad2.left_stick_y);
+        robot.slideMotorMax(gamepad2.right_stick_x);
+
         telemetry.addData("eleEncoderCP", robot.myself.eleMotor.getCurrentPosition());
         telemetry.addData("slideEncoderCP", robot.myself.slideMotor.getCurrentPosition());
+        telemetry.addData("slide power", gamepad2.right_stick_x);
+        //telemetry.addData("maxslide", robot.maxslide);
+        //telemetry.addData("base", robot.startingencodervalueS);
         telemetry.addData("elePower", gamepad2.left_stick_y);
-        robot.slideMotorMax(gamepad2.right_stick_x);
 
         /*if (gamepad2.right_stick_x  != 0.00) {
             if (!held) {

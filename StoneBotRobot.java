@@ -26,6 +26,9 @@ public class StoneBotRobot {
     private int maxslide = 0;
     private int hookservoTime = 2050;
 
+    private int eleheightClearBlock = -112;
+    private int eleheightOnBlock = -36;
+
     private double InchesPerSecond = .33;
     private double DegreesPerSecond = .46;
 
@@ -127,6 +130,22 @@ public class StoneBotRobot {
         myself.hookServo.setPower(-hookServoSpeed);
     }
 
+    public void eleClearBlockHeight() {
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        int tg = startingencodervalueE + eleheightClearBlock;
+        myself.eleMotor.setTargetPosition(tg);
+        myself.eleMotor.setPower(1);
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void eleDropToBlock() {
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        int tg = startingencodervalueE + eleheightOnBlock;
+        myself.eleMotor.setTargetPosition(tg);
+        myself.eleMotor.setPower(1);
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     public void eleServoIn(double Power) {
 
         if ((myself.eleMotor.getCurrentPosition() < maxelevator) && (Power < 0)){
@@ -141,9 +160,9 @@ public class StoneBotRobot {
 
     public void slideMotorMax(double Power) {
 
-        if ((myself.slideMotor.getCurrentPosition() < maxslide) && (Power < 0)){
+        if ((myself.slideMotor.getCurrentPosition() >= maxslide) && (Power > 0)){
             myself.slideMotor.setPower(0);
-        } else if (( myself.slideMotor.getCurrentPosition() > startingencodervalueS) && (Power >0)){
+        } else if (( myself.slideMotor.getCurrentPosition() <= startingencodervalueS) && (Power <0)){
             myself.slideMotor.setPower(0);
         } else {
             myself.slideMotor.setPower(Power*0.75);
@@ -155,6 +174,14 @@ public class StoneBotRobot {
 
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         int dest = myself.slideMotor.getCurrentPosition() + slideLoad;
+        myself.slideMotor.setTargetPosition(dest);
+        myself.slideMotor.setPower(1);
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void slideToMax() {
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        int dest = myself.slideMotor.getCurrentPosition() + slidedistance - 10;
         myself.slideMotor.setTargetPosition(dest);
         myself.slideMotor.setPower(1);
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -223,6 +250,35 @@ public class StoneBotRobot {
             myself.rightDrive.setPower(-power * 0.55);
             myself.rightrearDrive.setPower(-power * 0.55);
             moving = true;
+
+
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < (waitTime*100)) {
+
+        }
+        myself.leftDrive.setPower(0);
+        myself.leftrearDrive.setPower(0);
+        myself.rightDrive.setPower(0);
+        myself.rightrearDrive.setPower(0);
+        moving = false;
+
+    }
+
+    public void ArcLeft( int arc, boolean holdarmdown) {
+        moving = true;
+        double power = 1;
+
+        double waitTime = 0;
+        if (holdarmdown) {
+            myself.hookServo.setPower(-0.15);
+        }
+        waitTime = arc * InchesPerSecond;
+        myself.leftDrive.setPower(-power * 0.35);
+        myself.leftrearDrive.setPower(-power * 0.35);
+        myself.rightDrive.setPower(-power);
+        myself.rightrearDrive.setPower(-power);
+        moving = true;
 
 
         ElapsedTime timer =  new ElapsedTime();
