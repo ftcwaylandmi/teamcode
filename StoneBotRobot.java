@@ -20,8 +20,8 @@ public class StoneBotRobot {
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
 
-    private int slideLoad = 45;
-    private int slidedistance = 672;
+    private int slideLoad = -45;
+    private int slidedistance = -672;
     private int startingencodervalueS = 0;
     private int maxslide = 0;
     private int hookservoTime = 2050;
@@ -181,7 +181,7 @@ public class StoneBotRobot {
 
     public void slideToMax() {
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        int dest = myself.slideMotor.getCurrentPosition() + slidedistance - 200;
+        int dest = myself.slideMotor.getCurrentPosition() + slidedistance + 200;
         myself.slideMotor.setTargetPosition(dest);
         myself.slideMotor.setPower(1);
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

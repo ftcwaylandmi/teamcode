@@ -63,27 +63,23 @@ public class LRBlockGrab extends LinearOpMode {
         robot.DriveByInches(24);
         robot.eleClearBlockHeight();
         robot.wait(300);
-        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
-
         robot.slideToMax();
-        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
-
+        robot.grabServoGoToMax();
         robot.wait(300);
-        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
 
         robot.DriveByInches(6);
-        robot.grabServoGoToMax();
+
         robot.eleDropToBlock();
-        robot.wait(300);
+        robot.wait(400);
         //robot.grabServoGoToMin();
         robot.DriveByInches(-20);
         robot.TurnByDegrees(90);
-        //robot.DriveByInches(36);
-        //robot.eleClearBlockHeight();
-        //robot.DriveByInches(5);
-        //robot.grabServoGoToMin();
-        //robot.slideToReset();
-        //robot.TurnByDegrees(-75);
+        robot.DriveByInches(36);
+        robot.eleClearBlockHeight();
+        robot.DriveByInches(5);
+        robot.grabServoGoToMin();
+        robot.slideToReset();
+        robot.TurnByDegrees(-75);
         //robot.DriveByInches(48);
         //robot.TurnByDegrees(-90);
         //robot.DriveByInches(3);

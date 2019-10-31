@@ -57,6 +57,8 @@ public class StoneBotHardware {
         leftrearDrive.setDirection(DcMotor.Direction.FORWARD);
         rightrearDrive.setDirection(DcMotor.Direction.REVERSE);
 
+        slideMotor.setDirection(DcMotor.Direction.FORWARD);
+
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         leftrearDrive.setPower(0);
