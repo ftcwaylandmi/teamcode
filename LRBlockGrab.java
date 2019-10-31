@@ -53,6 +53,9 @@ public class LRBlockGrab extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         robot.initHW(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
+        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
+        telemetry.addData("curr_elevator", robot.CurrentEncoderVal("elevator"));
+
         waitForStart();
         runtime.reset();
 
@@ -60,8 +63,14 @@ public class LRBlockGrab extends LinearOpMode {
         robot.DriveByInches(24);
         robot.eleClearBlockHeight();
         robot.wait(300);
+        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
+
         robot.slideToMax();
+        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
+
         robot.wait(300);
+        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
+
         robot.DriveByInches(6);
         robot.grabServoGoToMax();
         robot.eleDropToBlock();
@@ -69,11 +78,11 @@ public class LRBlockGrab extends LinearOpMode {
         //robot.grabServoGoToMin();
         robot.DriveByInches(-20);
         robot.TurnByDegrees(90);
-        robot.DriveByInches(36);
-        robot.eleClearBlockHeight();
-        robot.DriveByInches(5);
-        robot.grabServoGoToMin();
-        robot.slideToLoad();
+        //robot.DriveByInches(36);
+        //robot.eleClearBlockHeight();
+        //robot.DriveByInches(5);
+        //robot.grabServoGoToMin();
+        //robot.slideToReset();
         //robot.TurnByDegrees(-75);
         //robot.DriveByInches(48);
         //robot.TurnByDegrees(-90);

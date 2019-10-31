@@ -181,10 +181,20 @@ public class StoneBotRobot {
 
     public void slideToMax() {
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        int dest = myself.slideMotor.getCurrentPosition() + slidedistance - 10;
+        int dest = myself.slideMotor.getCurrentPosition() + slidedistance - 200;
         myself.slideMotor.setTargetPosition(dest);
         myself.slideMotor.setPower(1);
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void slideToReset() {
+        eleClearBlockHeight();
+        wait(300);
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        myself.slideMotor.setTargetPosition(startingencodervalueS);
+        myself.slideMotor.setPower(1);
+        myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wait(300);
     }
 
     public void grabServoGoToMax() {
@@ -328,5 +338,39 @@ public class StoneBotRobot {
 
     public boolean IsMoving (){
         return moving;
+    }
+
+    public int CurrentEncoderVal(String encodername ) {
+        switch (encodername.toLowerCase()) {
+            case "elevator":
+                return myself.eleMotor.getCurrentPosition();
+            case "slide":
+                return myself.slideMotor.getCurrentPosition();
+            case "leftmotor":
+                return myself.leftDrive.getCurrentPosition();
+            case "rightmotor":
+                return myself.rightDrive.getCurrentPosition();
+            case "rightrear":
+                return myself.rightrearDrive.getCurrentPosition();
+            case "leftrear":
+                return myself.leftrearDrive.getCurrentPosition();
+            default:
+                return 0;
+        }
+    }
+
+    public int GetStoredValues(String storeval) {
+        switch (storeval.toLowerCase()) {
+            case "elevatormax":
+                return maxelevator;
+            case "elevatorstart":
+                return startingencodervalueE;
+            case "slidestart":
+                return startingencodervalueS;
+            case "slidemax":
+                return maxslide;
+            default:
+                return 0;
+        }
     }
 }
