@@ -10,6 +10,7 @@ public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
     private boolean moving;
 
+    boolean holdenabled = false;
     double hookServoSpeed = 1;
     double winchServoSpeed = 1;
 
@@ -50,6 +51,7 @@ public class StoneBotRobot {
 
         startingencodervalueS = myself.slideMotor.getCurrentPosition();
         maxslide = startingencodervalueS + slidedistance;
+        holdenabled = false;
 
     }
     public void DriveReverse(double power) {
@@ -160,7 +162,7 @@ public class StoneBotRobot {
 
     public void slideMotorMax(double Power) {
 
-        if ((myself.slideMotor.getCurrentPosition() >= maxslide) && (Power > 0)){
+        if ((myself.slideMotor.getCurrentPosition() <= maxslide) && (Power > 0)){
             myself.slideMotor.setPower(0);
         } else if (( myself.slideMotor.getCurrentPosition() <= startingencodervalueS) && (Power <0)){
             myself.slideMotor.setPower(0);
@@ -168,6 +170,27 @@ public class StoneBotRobot {
             myself.slideMotor.setPower(Power*0.75);
         }
 
+    }
+
+    public void holdElevator() {
+        holdenabled = true;
+        int encodercount = myself.eleMotor.getCurrentPosition();
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        myself.eleMotor.setTargetPosition(encodercount);
+        myself.eleMotor.setPower(1);
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void unHoldElevator() {
+        holdenabled = false;
+        myself.eleMotor.setPower(0);
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
+
+    public void slideMotorGoNoSafety(double power){
+        myself.slideMotor.setPower(power * 0.75);
     }
 
     public void slideToLoad() {
@@ -195,6 +218,26 @@ public class StoneBotRobot {
         myself.slideMotor.setPower(1);
         myself.slideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         wait(300);
+    }
+
+    public void DropCapstone() {
+        myself.capoutServo.setPower(1);
+
+    }
+
+    public void OpenCapHand() {
+
+        //This is backwards
+        myself.capServo.setPosition(0.65);
+    }
+
+    public void CloseCapHand() {
+        //This is backwards
+        myself.capServo.setPosition(-0.4);
+    }
+
+    public void StopCapstone(){
+        myself.capoutServo.setPower(0);
     }
 
     public void grabServoGoToMax() {

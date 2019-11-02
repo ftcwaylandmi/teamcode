@@ -53,10 +53,34 @@ public class TeleOpStone extends OpMode{
         } else if (gamepad2.left_bumper) {
                 robot.grabServoGoToMin();
         }
+        if (!robot.holdenabled) {
+            robot.eleServoIn(gamepad2.left_stick_y);
+        }
+        if (gamepad1.y) {
+            robot.slideMotorGoNoSafety(gamepad2.right_stick_x);
+        } else {
+            robot.slideMotorMax(gamepad2.right_stick_x);
+        }
+        if (gamepad1.a) {
+            robot.DropCapstone();
+        } else {
+            robot.StopCapstone();
+        }
 
-        robot.eleServoIn(gamepad2.left_stick_y);
-        robot.slideMotorMax(gamepad2.right_stick_x);
+        if (gamepad1.b) {
+            robot.OpenCapHand();
+        }
 
+        if (gamepad1.x) {
+            robot.CloseCapHand();
+        }
+
+        if (gamepad2.a) {
+            robot.holdElevator();
+        }
+        if (gamepad2.b) {
+            robot.unHoldElevator();
+        }
         telemetry.addData("eleEncoderCP", robot.myself.eleMotor.getCurrentPosition());
         telemetry.addData("slideEncoderCP", robot.myself.slideMotor.getCurrentPosition());
         telemetry.addData("slide power", gamepad2.right_stick_x);

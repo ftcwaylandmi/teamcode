@@ -24,6 +24,9 @@ public class StoneBotHardware {
 
     public CRServo hookServo = null;
     public Servo grabServo = null;
+    public Servo capServo = null;
+    public CRServo capoutServo = null;
+
 
     public int elevatormin;
     public int slidemin;
@@ -45,9 +48,8 @@ public class StoneBotHardware {
         hookServo = hwMap.get(CRServo.class, "hook_servo");
         //hookServo = hwMap.get(Servo.class,"hook_servo");
         grabServo = hwMap.get(Servo.class,"grab_servo");
-
-        InMaxSensor = hwMap.get(DigitalChannel.class, "max_sensor");
-        InMinSensor = hwMap.get(DigitalChannel.class, "min_sensor");
+        capServo = hwMap.get(Servo.class, "cap_grab");
+        capoutServo = hwMap.get(CRServo.class, "cap_out");
 
         slideMotor = hwMap.get(DcMotor.class, "slide_motor");
         eleMotor = hwMap.get(DcMotor.class, "ele_motor");
@@ -67,6 +69,7 @@ public class StoneBotHardware {
         grabServo.setPosition(0);
         eleMotor.setPower(0);
         slideMotor.setPower(0);
+        capServo.setPosition(-0.6);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -79,8 +82,6 @@ public class StoneBotHardware {
         slideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slidemin = slideMotor.getCurrentPosition();
 
-        InMaxSensor.setMode(DigitalChannel.Mode.INPUT);
-        InMinSensor.setMode(DigitalChannel.Mode.INPUT);
 
     }
 
