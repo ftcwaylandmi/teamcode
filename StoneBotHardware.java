@@ -69,7 +69,7 @@ public class StoneBotHardware {
         grabServo.setPosition(0);
         eleMotor.setPower(0);
         slideMotor.setPower(0);
-        capServo.setPosition(-0.6);
+        capServo.setPosition(0.4);
 
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

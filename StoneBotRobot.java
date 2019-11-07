@@ -295,7 +295,7 @@ public class StoneBotRobot {
 
         double waitTime = 0;
         if (holdarmdown) {
-            myself.hookServo.setPower(-0.15);
+            myself.hookServo.setPower(-0.05);
         }
             waitTime = arc * InchesPerSecond;
             myself.leftDrive.setPower(-power);
