@@ -14,12 +14,14 @@ public class StoneBotRobot {
     double hookServoSpeed = 1;
     double winchServoSpeed = 1;
 
-    double grabServoMax = 1;
-    double grabServoMin = -1;
+    double grabServoMax = 0.8;
+    double grabServoMin = -0.8;
 
     private int elevatordistance = 1230; //Still need to work on.
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
+
+    private int encodercountsperinch = 10;
 
     private int slideLoad = -45;
     private int slidedistance = -672;
@@ -155,7 +157,7 @@ public class StoneBotRobot {
         } else if (( myself.eleMotor.getCurrentPosition() > startingencodervalueE) && (Power >0)){
             myself.eleMotor.setPower(0);
         } else {
-            myself.eleMotor.setPower(Power/4);
+            myself.eleMotor.setPower(Power/6);
         }
 
     }
@@ -327,8 +329,8 @@ public class StoneBotRobot {
             myself.hookServo.setPower(-0.15);
         }
         waitTime = arc * InchesPerSecond;
-        myself.leftDrive.setPower(-power * 0.35);
-        myself.leftrearDrive.setPower(-power * 0.35);
+        myself.leftDrive.setPower(-power * 0.33);
+        myself.leftrearDrive.setPower(-power * 0.33);
         myself.rightDrive.setPower(-power);
         myself.rightrearDrive.setPower(-power);
         moving = true;
@@ -400,6 +402,49 @@ public class StoneBotRobot {
             default:
                 return 0;
         }
+    }
+
+    public void DriveWithEncoders(int left, int right, double power) {
+        moving = true;
+        if (myself.leftDrive.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
+            myself.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if (myself.rightDrive.getMode() != DcMotor.RunMode.RUN_USING_ENCODER) {
+            myself.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if (power < 0) {
+            power = -power;
+        }
+        int leftinc = myself.leftDrive.getCurrentPosition();
+        int rightinc = myself.rightDrive.getCurrentPosition();
+        left = leftinc + left;
+        right = rightinc + right;
+        myself.leftDrive.setTargetPosition(left);
+        myself.rightDrive.setTargetPosition(right);
+        myself.leftDrive.setPower(power);
+        myself.rightDrive.setPower(power);
+        if(left != myself.leftDrive.getCurrentPosition()) {
+            myself.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        if(right != myself.rightDrive.getCurrentPosition()) {
+            myself.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        moving = false;
+    }
+
+    public void DriveForwardEncodersByInches(int inches, double power) {
+        int dest = inches * encodercountsperinch;
+        DriveWithEncoders(dest, dest, power);
+    }
+
+    public void TurnWithEncodersByDegrees(int degrees, double power){
+        int encperdegree = 4;
+        if (degrees > 0) {
+            DriveWithEncoders(-degrees * encperdegree, degrees * encperdegree, 1);
+        } else {
+            DriveWithEncoders(degrees * encperdegree, -degrees * encperdegree, 1);
+        }
+
     }
 
     public int GetStoredValues(String storeval) {

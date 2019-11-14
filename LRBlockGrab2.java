@@ -34,9 +34,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="RR Foundation Move", group="Linear Opmode")
+@Autonomous(name="LR Block Grab2", group="Linear Opmode")
 
-public class RRFoundationMove extends LinearOpMode {
+public class LRBlockGrab2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -53,23 +53,37 @@ public class RRFoundationMove extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         robot.initHW(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
+        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
+        telemetry.addData("curr_elevator", robot.CurrentEncoderVal("elevator"));
+
         waitForStart();
         runtime.reset();
 
-        robot.DriveByInches(-30);
-        robot.hookServoDown();
-        robot.wait(500);
-        robot.ArcRight(98, true);
-        robot.DriveByInches(8);
-        robot.hookServoUp();
-        robot.wait(500);
-        robot.DriveByInches(-30);
-        robot.ArcRight(10,false);
-        robot.DriveByInches(43);
 
+        robot.DriveByInches(24);
+        robot.eleClearBlockHeight();
+        robot.wait(300);
+        robot.slideToMax();
+        robot.grabServoGoToMax();
+        robot.wait(300);
 
+        robot.DriveByInches(6);
 
-
+        robot.eleDropToBlock();
+        robot.wait(400);
+        //robot.grabServoGoToMin();
+        robot.DriveByInches(-20);
+        robot.TurnByDegrees(90);
+        robot.DriveByInches(36);
+        robot.eleClearBlockHeight();
+        robot.DriveByInches(5);
+        robot.grabServoGoToMin();
+        robot.slideToReset();
+        //robot.TurnByDegrees(-75);
+        //robot.DriveByInches(48);
+        //robot.TurnByDegrees(-90);
+        //robot.DriveByInches(3);
+        //robot.slideToLoad();
 
 
 
@@ -88,4 +102,5 @@ public class RRFoundationMove extends LinearOpMode {
         telemetry.update();
 
     }
+
 }

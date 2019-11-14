@@ -61,7 +61,7 @@ public class TeleOpStone extends OpMode{
         } else {
             robot.slideMotorMax(gamepad2.right_stick_x);
         }
-        if (gamepad1.a) {
+        if (gamepad1.left_bumper) {
             robot.DropCapstone();
         } else {
             robot.StopCapstone();
