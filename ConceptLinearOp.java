@@ -33,10 +33,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable
 
 @Autonomous(name="LR Block Grab2", group="Linear Opmode")
 
-public class LRBlockGrab2 extends LinearOpMode {
+public class ConceptLinearOp extends LinearOpMode {
+
+    VuforiaLocalizer vuforia;
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -45,6 +53,19 @@ public class LRBlockGrab2 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
+        int cameraMoniterViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id");
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMoniterViewId);
+
+        parameters.vuforiaLicenseKey = "AaxVY3r/////AAAAGbyMA3eUvEA2q83CLpzVrelPW7cPUPzKsok3Iq+EKO4jDShw8YK9P/CxrfpNh7EQbsS8MfspG4ctHTT27mnwW62RW5WKw6e8a96Icl5tCWxuqy/bycKxeWra2nQoWC3AzwDhpYsuhUTjMkTss9TyVuXdW1KlIxqhTqUkIld4LA13l9xkQzgIS1eA4rlj3VPDWeIAIKepR5s7TKOmLTHDrMLSbjefzF2RAj73YAopvfi4heZNCHTyPLkVKW3AiAobToqX92ibMJTmgSIV0wvTYrxc6f6HQpC5AVRos11CYuYS95H4QEg9HqU8WkxipYMWZ8UGpu4BltPoqipA1lq04MCyxe/gvdW1gsewE63WXgz0";
+
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+
+        VuforiaTrackables skystoneTrackables = this.vuforia.loadTrackablesFromAsset("SkyStoneVuMark");
+        VuforiaTrackable skystoneTemplate = skystoneTrackables.get(0);
+        skystoneTemplate.setName("skystoneVuMarkTemplate");
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -57,7 +78,21 @@ public class LRBlockGrab2 extends LinearOpMode {
         telemetry.addData("curr_elevator", robot.CurrentEncoderVal("elevator"));
 
         waitForStart();
+
+        skystoneTemplate.activate();
+
+        while (opModeIsActive()) {
+
+            skystoneVuMark vuMark = skystoneVuMark.from(skystoneTemplate);
+            if (vuMark != skystoneVuMark.UNKNOWN){
+
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) skystoneTemplate.getListener()).getPose();
+
+            }
+
+        }
         runtime.reset();
+
 
 
         robot.DriveByInches(24);
@@ -103,4 +138,33 @@ public class LRBlockGrab2 extends LinearOpMode {
 
     }
 
+    public void checkitems(){
+        VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
+        stoneTarget.setName("Stone Target");
+        VuforiaTrackable blueRearBridge = targetsSkyStone.get(1);
+        blueRearBridge.setName("Blue Rear Bridge");
+        VuforiaTrackable redRearBridge = targetsSkyStone.get(2);
+        redRearBridge.setName("Red Rear Bridge");
+        VuforiaTrackable redFrontBridge = targetsSkyStone.get(3);
+        redFrontBridge.setName("Red Front Bridge");
+        VuforiaTrackable blueFrontBridge = targetsSkyStone.get(4);
+        blueFrontBridge.setName("Blue Front Bridge");
+        VuforiaTrackable red1 = targetsSkyStone.get(5);
+        red1.setName("Red Perimeter 1");
+        VuforiaTrackable red2 = targetsSkyStone.get(6);
+        red2.setName("Red Perimeter 2");
+        VuforiaTrackable front1 = targetsSkyStone.get(7);
+        front1.setName("Front Perimeter 1");
+        VuforiaTrackable front2 = targetsSkyStone.get(8);
+        front2.setName("Front Perimeter 2");
+        VuforiaTrackable blue1 = targetsSkyStone.get(9);
+        blue1.setName("Blue Perimeter 1");
+        VuforiaTrackable blue2 = targetsSkyStone.get(10);
+        blue2.setName("Blue Perimeter 2");
+        VuforiaTrackable rear1 = targetsSkyStone.get(11);
+        rear1.setName("Rear Perimeter 1");
+        VuforiaTrackable rear2 = targetsSkyStone.get(12);
+        rear2.setName("Rear Perimeter 2");
+    }
 }
+
