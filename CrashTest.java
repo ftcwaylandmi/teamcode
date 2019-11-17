@@ -29,9 +29,14 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.drawable.GradientDrawable;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 @Autonomous(name="Crash Test", group="Linear Opmode")
@@ -41,8 +46,10 @@ public class CrashTest extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
+    private static final float mmPerInch        = 25.4f;
+    private static final float mmTargetHeight   = (6) * mmPerInch;
     private StoneBotRobot robot = new StoneBotRobot();
-
+    private Navigation nav = new Navigation();
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -52,13 +59,36 @@ public class CrashTest extends LinearOpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         robot.initHW(hardwareMap);
+        nav.InitNavigation(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
+        nav.NavigationActivate();
         waitForStart();
         runtime.reset();
+        nav.ScanEnvironment();
+        LocationTelemetry();
         robot.DriveForwardEncodersByInches(10, 1);
+
+        nav.ScanEnvironment();
+       LocationTelemetry();
         robot.TurnWithEncodersByDegrees(90, 1);
-        telemetry.addData("Complete", "done");
+
+        nav.ScanEnvironment();
+        LocationTelemetry();
         telemetry.update();
 
     }
+
+    public void LocationTelemetry() {
+        if (nav.IsVisible()) {
+            VectorF translation = nav.GetVector();
+            telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                    translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+            Orientation rotation = nav.GetOrientation();
+            telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+
+            telemetry.update();
+
+        }
+    }
 }
+

@@ -38,7 +38,7 @@ import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 
 @Autonomous(name="LR Block Grab2", group="Linear Opmode")
 
@@ -54,7 +54,7 @@ public class ConceptLinearOp extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        int cameraMoniterViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id");
+        /*int cameraMoniterViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id");
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMoniterViewId);
 
         parameters.vuforiaLicenseKey = "AaxVY3r/////AAAAGbyMA3eUvEA2q83CLpzVrelPW7cPUPzKsok3Iq+EKO4jDShw8YK9P/CxrfpNh7EQbsS8MfspG4ctHTT27mnwW62RW5WKw6e8a96Icl5tCWxuqy/bycKxeWra2nQoWC3AzwDhpYsuhUTjMkTss9TyVuXdW1KlIxqhTqUkIld4LA13l9xkQzgIS1eA4rlj3VPDWeIAIKepR5s7TKOmLTHDrMLSbjefzF2RAj73YAopvfi4heZNCHTyPLkVKW3AiAobToqX92ibMJTmgSIV0wvTYrxc6f6HQpC5AVRos11CYuYS95H4QEg9HqU8WkxipYMWZ8UGpu4BltPoqipA1lq04MCyxe/gvdW1gsewE63WXgz0";
@@ -65,7 +65,7 @@ public class ConceptLinearOp extends LinearOpMode {
         VuforiaTrackables skystoneTrackables = this.vuforia.loadTrackablesFromAsset("SkyStoneVuMark");
         VuforiaTrackable skystoneTemplate = skystoneTrackables.get(0);
         skystoneTemplate.setName("skystoneVuMarkTemplate");
-
+        */
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -79,7 +79,7 @@ public class ConceptLinearOp extends LinearOpMode {
 
         waitForStart();
 
-        skystoneTemplate.activate();
+        /*skystoneTemplate.activate();
 
         while (opModeIsActive()) {
 
@@ -90,10 +90,8 @@ public class ConceptLinearOp extends LinearOpMode {
 
             }
 
-        }
+        }*/
         runtime.reset();
-
-
 
         robot.DriveByInches(24);
         robot.eleClearBlockHeight();
@@ -138,7 +136,7 @@ public class ConceptLinearOp extends LinearOpMode {
 
     }
 
-    public void checkitems(){
+    /*public void checkitems(){
         VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
         stoneTarget.setName("Stone Target");
         VuforiaTrackable blueRearBridge = targetsSkyStone.get(1);
@@ -165,6 +163,6 @@ public class ConceptLinearOp extends LinearOpMode {
         rear1.setName("Rear Perimeter 1");
         VuforiaTrackable rear2 = targetsSkyStone.get(12);
         rear2.setName("Rear Perimeter 2");
-    }
+    }*/
 }
 

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class StoneBotRobot {
     StoneBotHardware myself = new StoneBotHardware();
+    Navigation nav;
     private boolean moving;
 
     boolean holdenabled = false;
@@ -21,7 +22,7 @@ public class StoneBotRobot {
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
 
-    private int encodercountsperinch = 10;
+    private int encodercountsperinch = 100;
 
     private int slideLoad = -45;
     private int slidedistance = -672;
@@ -55,6 +56,11 @@ public class StoneBotRobot {
         maxslide = startingencodervalueS + slidedistance;
         holdenabled = false;
 
+    }
+
+    public void initHWWithNav(HardwareMap ahwMap, Navigation navi) {
+        initHW(ahwMap);
+        nav = navi;
     }
     public void DriveReverse(double power) {
         drive(-power, -power);
@@ -236,6 +242,13 @@ public class StoneBotRobot {
     public void CloseCapHand() {
         //This is backwards
         myself.capServo.setPosition(-0.4);
+    }
+
+    public void BrakeServoUp() {
+        myself.brakeServo.setPosition(0.2);
+    }
+    public void BrakeServoDown() {
+        myself.brakeServo.setPosition(0.34);
     }
 
     public void StopCapstone(){
