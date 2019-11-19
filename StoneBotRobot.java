@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.DemoBotHardware;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,14 +18,14 @@ public class StoneBotRobot {
     double hookServoSpeed = 1;
     double winchServoSpeed = 1;
 
-    double grabServoMax = 0.8;
-    double grabServoMin = -0.8;
+    double grabServoMax = 1;
+    double grabServoMin = -0.75;
 
     private int elevatordistance = 1230; //Still need to work on.
     private int startingencodervalueE = 0;
     private int maxelevator = 0;
 
-    private int encodercountsperinch = 100;
+    private int encodercountsperinch = 1000;
 
     private int slideLoad = -45;
     private int slidedistance = -672;
@@ -35,6 +38,8 @@ public class StoneBotRobot {
 
     private double InchesPerSecond = .33;
     private double DegreesPerSecond = .46;
+
+    private boolean navEnabled = false;
 
     public void  initrobot(){
 
@@ -61,7 +66,9 @@ public class StoneBotRobot {
     public void initHWWithNav(HardwareMap ahwMap, Navigation navi) {
         initHW(ahwMap);
         nav = navi;
+        navEnabled = true;
     }
+
     public void DriveReverse(double power) {
         drive(-power, -power);
     }
@@ -241,7 +248,7 @@ public class StoneBotRobot {
 
     public void CloseCapHand() {
         //This is backwards
-        myself.capServo.setPosition(-0.4);
+        myself.capServo.setPosition(-0.5);
     }
 
     public void BrakeServoUp() {
@@ -451,7 +458,7 @@ public class StoneBotRobot {
     }
 
     public void TurnWithEncodersByDegrees(int degrees, double power){
-        int encperdegree = 4;
+        int encperdegree = 10;
         if (degrees > 0) {
             DriveWithEncoders(-degrees * encperdegree, degrees * encperdegree, 1);
         } else {
@@ -473,5 +480,69 @@ public class StoneBotRobot {
             default:
                 return 0;
         }
+    }
+
+    /********************************************************************************************************
+     *
+     *
+     * Navigation stuff here
+     */
+    public void TurnByNavigation(int degrees) {
+        nav.ScanEnvironment();
+        Orientation orientation = nav.GetOrientation();
+        while (degrees < orientation.firstAngle){
+            // turn
+            nav.ScanEnvironment();
+            orientation = nav.GetOrientation();
+        }
+    }
+
+    public void DriveToInchesFromBlueWall(int inches) {
+        nav.ScanEnvironment();
+        VectorF vec = nav.GetVector();
+        while (vec.get(1) <= inches) {
+            myself.rightDrive.setPower(.5);
+            myself.rightrearDrive.setPower(.5);
+            myself.leftDrive.setPower(.5);
+            myself.leftrearDrive.setPower(.5);
+            nav.ScanEnvironment();
+            vec = nav.GetVector();
+        }
+    }
+
+    public void DriveByNavigation(int inches) {
+        nav.ScanEnvironment();
+        while(!nav.IsVisible()) {
+            drivePower(-0.1);
+            //default vector here.
+            //VectorF v1 = nav.GetVector();
+         //   v1.put(1, 0);
+           // v1.put(2, 2);
+
+        }
+        VectorF vec = nav.GetVector();
+        float dest = vec.get(1) + inches;
+        if (inches > 0) {
+            //drive forward
+
+            while(vec.get(1) >= dest){
+                drivePower(0.5);
+            }
+            drivePower(0);
+        } else {
+            // drive backwards
+            while(vec.get(1) >= dest){
+                drivePower(-0.5);
+            }
+            drivePower(0);
+        }
+        drivePower(0);
+    }
+
+    public void drivePower(double power){
+        myself.rightDrive.setPower(power);
+        myself.rightrearDrive.setPower(power);
+        myself.leftDrive.setPower(power);
+        myself.leftrearDrive.setPower(power);
     }
 }

@@ -29,6 +29,13 @@ public class TeleOpSlidebot extends OpMode{
     public void loop(){
         robot.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         robot.slide(gamepad1.left_stick_x);
+        if(gamepad1.a) {
+            robot.HandOpen();
+        } else if (gamepad1.b) {
+            robot.HandClose();
+        } else {
+            robot.HandStop();
+        }
 
     }
 

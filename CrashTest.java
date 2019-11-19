@@ -64,17 +64,26 @@ public class CrashTest extends LinearOpMode {
         nav.NavigationActivate();
         waitForStart();
         runtime.reset();
-        nav.ScanEnvironment();
-        LocationTelemetry();
-        robot.DriveForwardEncodersByInches(10, 1);
+        robot.DriveByNavigation(18);
 
-        nav.ScanEnvironment();
-       LocationTelemetry();
-        robot.TurnWithEncodersByDegrees(90, 1);
+        robot.TurnByNavigation(90);
+        while(!nav.IsVisible()) {
+            nav.ScanEnvironment();
+            telemetry.addData("Navigation", "Found");
+        }
+       // robot.DriveToInchesFromBlueWall(10);
+        //LocationTelemetry();
+        //robot.DriveByInches(-1);
 
-        nav.ScanEnvironment();
-        LocationTelemetry();
-        telemetry.update();
+        //nav.ScanEnvironment();
+       //LocationTelemetry();
+        //robot.TurnWithEncodersByDegrees(90, 1);
+        while(runtime.seconds() < 60) {
+            nav.ScanEnvironment();
+            LocationTelemetry();
+            robot.wait(1000);
+        }
+        //telemetry.update();
 
     }
 

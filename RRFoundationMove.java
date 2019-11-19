@@ -56,7 +56,7 @@ public class RRFoundationMove extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        robot.DriveByInches(-30);
+        robot.DriveByInches(-31);
         robot.hookServoDown();
         robot.wait(500);
         robot.ArcRight(98, true);
