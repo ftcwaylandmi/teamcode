@@ -311,6 +311,36 @@ public class StoneBotRobot {
 
     }
 
+    public void DriveByInchesTimeSetPower( int inches, double power) {
+        moving = true;
+        double waitTime = 0.00;
+        if (inches > 0) {
+            power = power * -1;
+            waitTime = inches * InchesPerSecond;
+            myself.leftDrive.setPower(power);
+            myself.leftrearDrive.setPower(power);
+            myself.rightDrive.setPower(power);
+            myself.rightrearDrive.setPower(power);
+        } else {
+            waitTime = -inches * InchesPerSecond;
+            myself.leftDrive.setPower(power);
+            myself.leftrearDrive.setPower(power);
+            myself.rightDrive.setPower(power);
+            myself.rightrearDrive.setPower(power);
+        }
+        ElapsedTime timer =  new ElapsedTime();
+        timer.reset();
+        while (timer.milliseconds() < (waitTime* 100)) {
+
+        }
+        myself.leftDrive.setPower(0);
+        myself.leftrearDrive.setPower(0);
+        myself.rightDrive.setPower(0);
+        myself.rightrearDrive.setPower(0);
+        moving = false;
+
+    }
+
     public void ArcRight( int arc, boolean holdarmdown) {
         moving = true;
         double power = 1;
@@ -513,7 +543,7 @@ public class StoneBotRobot {
     public void DriveByNavigation(int inches) {
         nav.ScanEnvironment();
         while(!nav.IsVisible()) {
-            drivePower(-0.1);
+            drivePower(-0.3);
             //default vector here.
             //VectorF v1 = nav.GetVector();
          //   v1.put(1, 0);
@@ -526,13 +556,13 @@ public class StoneBotRobot {
             //drive forward
 
             while(vec.get(1) >= dest){
-                drivePower(0.5);
+                drivePower(0.8);
             }
             drivePower(0);
         } else {
             // drive backwards
-            while(vec.get(1) >= dest){
-                drivePower(-0.5);
+            while(vec.get(1) <= dest){
+                drivePower(-0.8);
             }
             drivePower(0);
         }
