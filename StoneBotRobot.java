@@ -243,16 +243,16 @@ public class StoneBotRobot {
     public void OpenCapHand() {
 
         //This is backwards
-        myself.capServo.setPosition(0.65);
+        myself.capServo.setPosition(0.7);
     }
 
     public void CloseCapHand() {
         //This is backwards
-        myself.capServo.setPosition(-0.5);
+        myself.capServo.setPosition(-0.4);
     }
 
     public void BrakeServoUp() {
-        myself.brakeServo.setPosition(0.4);
+        myself.brakeServo.setPosition(0.2);
     }
     public void BrakeServoDown() {
         myself.brakeServo.setPosition(0.34);
