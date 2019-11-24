@@ -56,11 +56,11 @@ public class RBBlockGrab2 extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        robot.DriveByInches(24);
-        robot.TurnByDegrees(-75);
         robot.DriveByInches(48);
-        robot.TurnByDegrees(-90);
-        robot.DriveByInches(3);
+        //robot.TurnByDegrees(-75);
+        //robot.DriveByInches(48);
+        //robot.TurnByDegrees(-90);
+        //robot.DriveByInches(3);
 
 
 

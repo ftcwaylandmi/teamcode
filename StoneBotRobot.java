@@ -33,7 +33,7 @@ public class StoneBotRobot {
     private int maxslide = 0;
     private int hookservoTime = 2050;
 
-    private int eleheightClearBlock = -112;
+    private int eleheightClearBlock = -175;
     private int eleheightOnBlock = -36;
 
     private double InchesPerSecond = .33;
@@ -252,7 +252,7 @@ public class StoneBotRobot {
     }
 
     public void BrakeServoUp() {
-        myself.brakeServo.setPosition(0.2);
+        myself.brakeServo.setPosition(0.4);
     }
     public void BrakeServoDown() {
         myself.brakeServo.setPosition(0.34);
@@ -428,6 +428,10 @@ public class StoneBotRobot {
         myself.rightDrive.setPower(0);
         myself.rightrearDrive.setPower(0);
         moving = false;
+
+    }
+
+    public void GrabBlock(){
 
     }
 
