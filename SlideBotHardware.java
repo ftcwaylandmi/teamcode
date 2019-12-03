@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 public class SlideBotHardware {
 
@@ -11,6 +12,8 @@ public class SlideBotHardware {
     public DcMotor leftrearDrive = null;
     public DcMotor rightrearDrive = null;
 
+    public CRServo armMotor = null;
+    public CRServo handServo = null;
     HardwareMap hwMap = null;
 
     public SlideBotHardware() {
@@ -24,6 +27,9 @@ public class SlideBotHardware {
         rightDrive = hwMap.get(DcMotor.class, "rfd");
         leftrearDrive = hwMap.get(DcMotor.class, "lrd");
         rightrearDrive = hwMap.get(DcMotor.class, "rrd");
+
+        armMotor = hwMap.get(CRServo.class, "armservo");
+        handServo = hwMap.get(CRServo.class, "handservo");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -39,6 +45,11 @@ public class SlideBotHardware {
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightrearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // Set power to 0 so the motor isn't running.
+        handServo.setPower(0);
+        armMotor.setPower(0);
+
 
 
     }

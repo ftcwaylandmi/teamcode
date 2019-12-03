@@ -30,6 +30,21 @@ public class TeleOpSlidebot extends OpMode{
         robot.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         robot.slide(gamepad1.left_stick_x);
 
+        if (gamepad1.a) {
+            robot.HandServo(1);
+        } else {
+            robot.HandServo(0);
+        }
+
+        if (gamepad1.left_bumper) {
+            robot.ArmMotor(1);
+        } else if (gamepad1.right_bumper) {
+            robot.ArmMotor(-1);
+        } else {
+            robot.ArmMotor(0);
+        }
+
+
     }
 
 
