@@ -57,16 +57,17 @@ public class LBFoundationMove extends LinearOpMode {
         runtime.reset();
 
 
-        robot.DriveByInches(-30);
+        robot.DriveByInches(-28);
         robot.hookServoDown();
         robot.wait(500);
-        robot.ArcLeft(108, true);
+        robot.ArcLeft(98, true);
         robot.DriveByInches(8);
         robot.hookServoUp();
         robot.wait(500);
         robot.DriveByInches(-30);
-        robot.ArcLeft(10, false);
-        robot.DriveByInches(43);
+        robot.ArcLeft( 10,false);
+        robot.DriveByInches(42);
+
 
 
 

@@ -13,8 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor armDrive = null;
-    public DcMotor elbowDrive = null;
-    public Servo pinServo = null;
+
 
     HardwareMap hwMap = null;
 
@@ -28,21 +27,18 @@ import com.qualcomm.robotcore.hardware.Servo;
         leftDrive=hwMap.get(DcMotor.class,"lfd");
         rightDrive=hwMap.get(DcMotor.class,"rfd");
         armDrive=hwMap.get(DcMotor.class,"ad");
-        elbowDrive=hwMap.get(DcMotor.class,"ed");
-        pinServo=hwMap.get(Servo.class,"pin_servo");
+
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.FORWARD);
-        elbowDrive.setDirection(DcMotor.Direction.REVERSE);
+
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         armDrive.setPower(0);
-        elbowDrive.setPower(0);
-        pinServo.setPosition(0);
+
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        elbowDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

@@ -34,9 +34,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="LR Block Grab2", group="Linear Opmode")
+@Autonomous(name="RR2 Park By Wall", group="Linear Opmode")
 
-public class LRBlockGrab2 extends LinearOpMode {
+public class RR2ParkByWall extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -53,37 +53,28 @@ public class LRBlockGrab2 extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         robot.initHW(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
-        telemetry.addData("curr_slide", robot.CurrentEncoderVal("slide"));
-        telemetry.addData("curr_elevator", robot.CurrentEncoderVal("elevator"));
-
         waitForStart();
         runtime.reset();
 
-
+        robot.wait(20000);
         robot.DriveByInches(24);
-        robot.eleClearBlockHeight();
-        robot.wait(300);
-        robot.slideToMax();
-        robot.grabServoGoToMax();
-        robot.wait(300);
+        robot.TurnByDegrees(-90);
+        robot.DriveByInches(11);
 
-        robot.DriveByInches(6);
 
-        robot.eleDropToBlock();
-        robot.wait(400);
-        //robot.grabServoGoToMin();
-        robot.DriveByInches(-20);
-        robot.TurnByDegrees(90);
-        robot.DriveByInches(36);
-        robot.eleClearBlockHeight();
-        robot.DriveByInches(5);
-        robot.grabServoGoToMin();
-        robot.slideToReset();
-        //robot.TurnByDegrees(-75);
-        //robot.DriveByInches(48);
-        //robot.TurnByDegrees(-90);
-        //robot.DriveByInches(3);
-        //robot.slideToLoad();
+        /*robot.DriveByInches(-28);
+        robot.hookServoDown();
+        robot.wait(500);
+        robot.ArcLeft(98, true);
+        robot.DriveByInches(8);
+        robot.hookServoUp();
+        robot.wait(500);
+        robot.DriveByInches(-30);
+        robot.ArcLeft( 10,false);
+        robot.DriveByInches(42);*/
+
+
+
 
 
 
@@ -103,4 +94,10 @@ public class LRBlockGrab2 extends LinearOpMode {
 
     }
 
+    public void Wait() {
+        while(robot.IsMoving()){
+
+        }
+
+    }
 }
