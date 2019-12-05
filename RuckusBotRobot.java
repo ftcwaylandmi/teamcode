@@ -15,8 +15,6 @@ public class RuckusBotRobot {
         myself.rightDrive.setPower(rpower);
         myself.leftDrive.setPower(lpower);
         moving=true;
-        double pinServoMax = 1;
-        double pinServoMin = 0;
     }
 
     public void initHW(HardwareMap ahwMap) {
@@ -54,15 +52,6 @@ public class RuckusBotRobot {
         moving = false;
     }
 
-    public void ElbowUp(){
-        myself.elbowDrive.setPower(1);
-        moving = false;
-    }
-
-    public void ElbowDown(){
-        myself.elbowDrive.setPower(-1);
-        moving = false;
-    }
 
     public boolean ISMoving() {
         return moving;
@@ -74,18 +63,6 @@ public class RuckusBotRobot {
 
     public void LeftDrive(double power){
         myself.leftDrive.setPower(power);
-    }
-
-    public void pinServoGoToMax() {
-        myself.pinServo.setPosition(pinServoMax);
-    }
-
-    public void pinServoGoToMin() {
-        myself.pinServo.setPosition(pinServoMin);
-    }
-
-    public void pinServoStop() {
-        myself.pinServo.setPosition(0);
     }
 
 }

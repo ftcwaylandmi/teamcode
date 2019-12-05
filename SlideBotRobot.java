@@ -57,6 +57,7 @@ public class SlideBotRobot {
     }
 
 
+
     public void slide(double power){
         myself.rightrearDrive.setPower(-power);
         myself.rightDrive.setPower(power);
@@ -74,7 +75,15 @@ public class SlideBotRobot {
     }
 
     public void HandStop(){
-        myself.handServo.setPower(.02);
+        myself.handServo.setPower(.01);
+    }
+
+    public void ArmUp(){
+        myself.armServo.setPower(1);
+    }
+
+    public void ArmDown(){
+        myself.armServo.setPower(-1);
     }
 
 }

@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="RB Block Grab", group="Linear Opmode")
+@Autonomous(name = "RB Block Grab", group = "Linear Opmode")
 
 public class RBBlockGrab extends LinearOpMode {
 
@@ -56,25 +56,27 @@ public class RBBlockGrab extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        robot.DriveByInches(20);
+        robot.DriveByInches(19);
         robot.eleClearBlockHeight();
         robot.wait(300);
         robot.slideToMax();
         robot.wait(600);
-
-        robot.DriveByInches(12);
-
+        robot.DriveByInches(9);
         robot.eleDropToBlock();
         robot.wait(400);
         robot.grabServoGoToMax();
+        robot.wait(100);
+        robot.eleLiftBlock();
         //robot.grabServoGoToMin();
         robot.DriveByInches(-20);
         robot.TurnByDegrees(-110);
         robot.DriveByInches(60);
-        robot.eleClearBlockHeight();
-        robot.DriveByInches(-24);
-        robot.DriveByInches(5);
         robot.grabServoGoToMin();
+        robot.eleClearBlockHeight();
+        robot.wait(700);
+        robot.DriveByInches(-26);
+        robot.DriveByInches(5);
+        robot.slideToLoad();
         robot.slideToReset();
 
 

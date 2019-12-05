@@ -33,8 +33,9 @@ public class StoneBotRobot {
     private int maxslide = 0;
     private int hookservoTime = 2050;
 
-    private int eleheightClearBlock = -175;
-    private int eleheightOnBlock = -36;
+    private int eleheightClearBlock = -199;
+    private int eleheightOnBlock = -34;
+    private int eleheightLiftBlock = -36;
 
     private double InchesPerSecond = .33;
     private double DegreesPerSecond = .46;
@@ -155,6 +156,14 @@ public class StoneBotRobot {
         myself.eleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    public void eleLiftBlock() {
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        int tg = startingencodervalueE + eleheightLiftBlock;
+        myself.eleMotor.setTargetPosition(tg);
+        myself.eleMotor.setPower(1);
+        myself.eleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     public void eleDropToBlock() {
         myself.eleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         int tg = startingencodervalueE + eleheightOnBlock;
@@ -243,19 +252,19 @@ public class StoneBotRobot {
     public void OpenCapHand() {
 
         //This is backwards
-        myself.capServo.setPosition(0.7);
+        myself.capServo.setPosition(0.43);
     }
 
     public void CloseCapHand() {
         //This is backwards
-        myself.capServo.setPosition(-0.4);
+        myself.capServo.setPosition(-0.78);
     }
 
     public void BrakeServoUp() {
         myself.brakeServo.setPosition(0.2);
     }
     public void BrakeServoDown() {
-        myself.brakeServo.setPosition(0.34);
+        myself.brakeServo.setPosition(0.46);
     }
 
     public void StopCapstone(){
@@ -376,11 +385,11 @@ public class StoneBotRobot {
 
         double waitTime = 0;
         if (holdarmdown) {
-            myself.hookServo.setPower(-0.15);
+            myself.hookServo.setPower(-0.05);
         }
         waitTime = arc * InchesPerSecond;
-        myself.leftDrive.setPower(-power * 0.33);
-        myself.leftrearDrive.setPower(-power * 0.33);
+        myself.leftDrive.setPower(-power * 0.48);
+        myself.leftrearDrive.setPower(-power * 0.48);
         myself.rightDrive.setPower(-power);
         myself.rightrearDrive.setPower(-power);
         moving = true;
@@ -504,7 +513,7 @@ public class StoneBotRobot {
     public int GetStoredValues(String storeval) {
         switch (storeval.toLowerCase()) {
             case "elevatormax":
-                return maxelevator;
+                 return maxelevator;
             case "elevatorstart":
                 return startingencodervalueE;
             case "slidestart":

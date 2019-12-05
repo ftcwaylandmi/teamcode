@@ -36,6 +36,13 @@ public class TeleOpSlidebot extends OpMode{
         } else {
             robot.HandStop();
         }
+        if(gamepad1.x){
+            robot.ArmUp();
+        }
+        if(gamepad1.y){
+            robot.ArmDown();
+        }
+
 
     }
 
